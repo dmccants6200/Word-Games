@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.wordgames.MainSceneController">
+   <children>
+      <BorderPane fx:id="difficultyMenu" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="easyButton" mnemonicParsing="false" onAction="#setDifficulty" text="Easy">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="mediumButton" mnemonicParsing="false" onAction="#setDifficulty" text="Medium">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="hardButton" mnemonicParsing="false" onAction="#setDifficulty" text="Hard">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+            </VBox>
+         </center>
+         <bottom>
+            <Button fx:id="titleScreenButton" mnemonicParsing="false" onAction="#openTitleScreen" text="Return to Title Screen" BorderPane.alignment="BOTTOM_LEFT">
+               <BorderPane.margin>
+                  <Insets bottom="10.0" left="10.0" />
+               </BorderPane.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </bottom>
+         <top>
+            <Label stylesheets="@stylesheet.css" text="Select Difficulty" BorderPane.alignment="TOP_CENTER" />
+         </top>
+      </BorderPane>
+      <BorderPane fx:id="titleScreen" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <Button fx:id="playButton" mnemonicParsing="false" onAction="#closeTitleScreen" text="Play" BorderPane.alignment="BOTTOM_CENTER">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <BorderPane.margin>
+                  <Insets bottom="10.0" />
+               </BorderPane.margin>
+            </Button>
+         </center>
+         <top>
+            <Label alignment="BASELINE_CENTER" stylesheets="@stylesheet.css" text="Word Games" textAlignment="CENTER" textOverrun="CLIP" BorderPane.alignment="TOP_CENTER">
+               <font>
+                  <Font name="Arial" size="70.0" />
+               </font>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+            </Label>
+         </top>
+      </BorderPane>
+   </children>
+</AnchorPane>

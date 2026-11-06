@@ -1,0 +1,7 @@
+.label {
+    -fx-font-size: 50px;
+    -fx-font-family: "Arial Black";
+    -fx-text-align: center;
+    -fx-text-overrun: clip;
+    
+}
