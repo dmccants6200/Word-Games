@@ -1,7 +1,34 @@
-.label {
+.header1 {
     -fx-font-size: 50px;
     -fx-font-family: "Arial Black";
     -fx-text-align: center;
     -fx-text-overrun: clip;
     
+}
+
+.header2 {
+    -fx-font-size: 35px;
+    -fx-font-family: "Arial Black";
+    -fx-text-align: center;
+    -fx-text-overrun: clip;
+}
+
+.button{
+    -fx-cursor: "hand"
+}
+
+.ladderInput {
+    -fx-alignment: center;
+    -fx-pref-height: "50px";
+    -fx-font-size: 35px;
+    -fx-text-align: center;
+    -fx-max-height: 75px;
+    -fx-pref-height: 75px;
+    -fx-min-height: 75px;
+    -fx-max-width: 75px;
+    -fx-pref-width: 75px;
+    -fx-min-width: 75px;
+    -fx-border-width: 5px;
+    -fx-border-color: "black";
+    -fx-text-overrun: clip;
 }
