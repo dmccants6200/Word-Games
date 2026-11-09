@@ -1,7 +1,14 @@
 package com.wordgames;
 
+import java.io.IOException;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -84,9 +91,16 @@ public class MainSceneController {
     }
 
     @FXML
-    void startWordLadder(ActionEvent event) {
-        //String[] ladder = gameLogic.getWordLadder(DIFFICULTY);
+    void startWordLadder(ActionEvent event) throws IOException{
+        FXMLLoader wordLadderUI = new FXMLLoader(App.class.getResource("wordLadder.fxml"));
+        Parent root = wordLadderUI.load();
+        Scene scene = new Scene(root, 640, 480);
 
-
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage.hide();
+        stage.setTitle("Word Games: Word Ladder");
+        stage.setScene(scene);
+        stage.setFullScreenExitHint("");
+        stage.show();
     }
 }

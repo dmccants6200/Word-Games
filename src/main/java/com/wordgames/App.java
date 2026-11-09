@@ -12,9 +12,10 @@ public class App extends Application {
 
     @Override
     public void start(@SuppressWarnings("exports") Stage primaryStage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("UI.fxml"));
-        Parent root = fxmlLoader.load();
+        FXMLLoader mainUI = new FXMLLoader(App.class.getResource("UI.fxml"));
+        Parent root = mainUI.load();
         Scene scene = new Scene(root, 640, 480);
+        
         primaryStage.setFullScreen(true);
         primaryStage.setTitle("Word Games");
         primaryStage.setScene(scene);
