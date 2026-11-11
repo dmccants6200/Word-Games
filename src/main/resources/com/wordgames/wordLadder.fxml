@@ -7,11 +7,11 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.wordgames.wordLadderController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.wordgames.WordLadderController">
    <children>
       <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
-            <GridPane alignment="CENTER" BorderPane.alignment="CENTER">
+            <GridPane fx:id="wordGrid" alignment="CENTER" BorderPane.alignment="CENTER">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="95.0" prefWidth="95.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="95.0" />
@@ -24,18 +24,18 @@
                   <RowConstraints maxHeight="-Infinity" minHeight="95.0" prefHeight="95.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="75.0" prefWidth="75.0" styleClass="ladderInput" stylesheets="@stylesheet.css" text="W" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                  <Label styleClass="ladderInput" stylesheets="@stylesheet.css" text="W" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                  <Label styleClass="ladderInput" stylesheets="@stylesheet.css" text="W" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                  <Label styleClass="ladderInput" stylesheets="@stylesheet.css" text="W" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                  <Label styleClass="ladderInput" stylesheets="@stylesheet.css" text="W" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                  <Label styleClass="ladderInput" stylesheets="@stylesheet.css" text="W" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                  <Label styleClass="ladderInput" stylesheets="@stylesheet.css" text="W" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-                  <Label styleClass="ladderInput" stylesheets="@stylesheet.css" text="W" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-                  <Label styleClass="ladderInput" stylesheets="@stylesheet.css" text="W" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-                  <Label styleClass="ladderInput" stylesheets="@stylesheet.css" text="W" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-                  <Label styleClass="ladderInput" stylesheets="@stylesheet.css" text="W" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-                  <Label styleClass="ladderInput" stylesheets="@stylesheet.css" text="W" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                  <Label maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="75.0" prefWidth="75.0" styleClass="ladderInput" stylesheets="@stylesheet.css" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Label styleClass="ladderInput" stylesheets="@stylesheet.css" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Label styleClass="ladderInput" stylesheets="@stylesheet.css" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Label styleClass="ladderInput" stylesheets="@stylesheet.css" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                  <Label styleClass="ladderInput" stylesheets="@stylesheet.css" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                  <Label styleClass="ladderInput" stylesheets="@stylesheet.css" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                  <Label styleClass="ladderInput" stylesheets="@stylesheet.css" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                  <Label styleClass="ladderInput" stylesheets="@stylesheet.css" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                  <Label styleClass="ladderInput" stylesheets="@stylesheet.css" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                  <Label styleClass="ladderInput" stylesheets="@stylesheet.css" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                  <Label styleClass="ladderInput" stylesheets="@stylesheet.css" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                  <Label styleClass="ladderInput" stylesheets="@stylesheet.css" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
                </children>
             </GridPane>
          </center>

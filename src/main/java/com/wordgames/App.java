@@ -2,7 +2,6 @@ package com.wordgames;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -13,10 +12,9 @@ public class App extends Application {
     @Override
     public void start(@SuppressWarnings("exports") Stage primaryStage) throws IOException {
         FXMLLoader mainUI = new FXMLLoader(App.class.getResource("UI.fxml"));
-        Parent root = mainUI.load();
-        Scene scene = new Scene(root, 640, 480);
+        Scene scene = new Scene(mainUI.load(), 640, 480);
         
-        primaryStage.setFullScreen(true);
+        //primaryStage.setFullScreen(true);
         primaryStage.setTitle("Word Games");
         primaryStage.setScene(scene);
         primaryStage.show();

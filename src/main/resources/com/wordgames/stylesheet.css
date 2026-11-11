@@ -17,6 +17,10 @@
     -fx-cursor: "hand"
 }
 
+.radio-button{
+    -fx-cursor: "hand"
+}
+
 .ladderInput {
     -fx-alignment: center;
     -fx-pref-height: "50px";
@@ -29,6 +33,36 @@
     -fx-pref-width: 75px;
     -fx-min-width: 75px;
     -fx-border-width: 5px;
-    -fx-border-color: "black";
+    -fx-border-color: black;
+    -fx-background-color: rgb(160, 160, 160);
+    -fx-text-fill: black;
     -fx-text-overrun: clip;
+}
+
+.selected {
+    -fx-border-color: blue
+}
+
+.not-one-off {
+    -fx-text-fill: yellow
+}
+
+.valid {
+    -fx-text-fill: green
+}
+
+.invalid {
+    -fx-text-fill: red
+}
+
+.incorrect {
+    -fx-border-color: red
+}
+
+.no-chain {
+    -fx-border-color: yellow
+}
+
+.correct {
+    -fx-border-color: green
 }

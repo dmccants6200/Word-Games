@@ -5,11 +5,11 @@ import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 
@@ -17,37 +17,16 @@ public class MainSceneController {
     public int DIFFICULTY;
 
     @FXML
-    private Button continueButton;
+    private Button continueButton, playButton, playWordLadder, titleScreenButton;
 
     @FXML
-    private BorderPane difficultyMenu;
-
-    @FXML
-    private Button easyButton;
+    private BorderPane difficultyMenu, titleScreen, wordLadderPane;
 
     @FXML
     private HBox gameSelectMenu;
 
     @FXML
-    private Button hardButton;
-
-    @FXML
-    private Button mediumButton;
-
-    @FXML
-    private Button playButton;
-
-    @FXML
-    private Button playWordLadder;
-
-    @FXML
-    private BorderPane titleScreen;
-
-    @FXML
-    private Button titleScreenButton;
-
-    @FXML
-    private BorderPane wordLadderPane;
+    private RadioButton easyButton, mediumButton, hardButton;
 
     @FXML
     void closeTitleScreen(ActionEvent event) {
@@ -70,31 +49,32 @@ public class MainSceneController {
     }
 
     @FXML
-    void setDifficultyEasy(ActionEvent event) {
-        DIFFICULTY = 0;
-        continueButton.setDisable(false);
-        continueButton.setText("Continue on Easy difficluty");
-    }
-
-    @FXML
-    void setDifficultyHard(ActionEvent event) {
-        DIFFICULTY = 2;
-        continueButton.setDisable(false);
-        continueButton.setText("Continue on Hard difficluty");
-    }
-
-    @FXML
-    void setDifficultyMedium(ActionEvent event) {
-        DIFFICULTY = 1;
-        continueButton.setDisable(false);
-        continueButton.setText("Continue on Medium difficluty");
+    void setDifficulty(ActionEvent event) {
+        if (easyButton.isSelected()) {
+            continueButton.setText("Continue on Easy");
+            DIFFICULTY = 0;
+        } else if (mediumButton.isSelected()) {
+            continueButton.setText("Continue on Medium");
+            DIFFICULTY = 1;
+        } else if (hardButton.isSelected()) {
+            continueButton.setText("Continue on Hard");
+            DIFFICULTY = 2;
+        }
     }
 
     @FXML
     void startWordLadder(ActionEvent event) throws IOException{
         FXMLLoader wordLadderUI = new FXMLLoader(App.class.getResource("wordLadder.fxml"));
-        Parent root = wordLadderUI.load();
-        Scene scene = new Scene(root, 640, 480);
+        Scene scene = new Scene(wordLadderUI.load(), 640, 480);
+
+        WordLadderController ladderController = wordLadderUI.getController();
+        ladderController.initializeWordLadder(DIFFICULTY);
+
+        scene.setOnKeyPressed(keyEvent -> {
+            if (!(keyEvent.getCode().isLetterKey() || keyEvent.getCode().toString().equals("BACK_SPACE"))) return;
+
+            ladderController.insertLetter(keyEvent.getCode().toString());
+        });
 
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         stage.hide();

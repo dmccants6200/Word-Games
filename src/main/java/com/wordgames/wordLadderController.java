@@ -1,145 +1,190 @@
 package com.wordgames;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Random;
 import java.util.Set;
+import java.util.ArrayList;
+import java.util.Arrays;
 
-public class wordLadderController {
-    public static String[] getWordLadder(int difficulty) {
-        String[] finalArray = new String[0];
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
+
+public class WordLadderController {
+    @FXML
+    private GridPane wordGrid;
+    String[] wordList = null;
+
+    int selected;
+    Boolean initializing = false;
+
+    private Label getBox(int position) {
+        return (Label) wordGrid.getChildren().get(position);
+    }
+
+    private String[] getFullLadder() {
+        List<String> ladder = new ArrayList<>();
+
+        for (int i = 0; i < wordGrid.getRowCount() ; i++) {
+            String word = "";
+
+            for(int j = 0; j < wordGrid.getColumnCount(); j++) {
+                word = word + getBox(j + i * wordGrid.getColumnCount()).getText().toLowerCase();
+            }
+
+            ladder.add(word);
+        }
+
+        return ladder.toArray(new String[0]);
+    }
+
+    public void initializeWordLadder(int difficulty) {
+        initializing = true;
+        final String[] ladders = WordLadder.generateLadder(difficulty);
+        Random rand = new Random();
+
+        for (int i = 0; i < wordGrid.getChildren().size(); i++) {
+            getBox(i).setText("");
+            getBox(i).getStyleClass().remove("correct");
+            getBox(i).getStyleClass().remove("selected");
+            getBox(i).getStyleClass().remove("valid");
+        }
 
         switch (difficulty) {
             case 0:
-                String filePath = "src\\main\\java\\com\\wordgames\\WordBanks\\easy.txt"; // path to text file
-                List<String> lines = new ArrayList<>();
-                    
-                try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-                    String line;
-                    while ((line = br.readLine()) != null) {lines.add(line);}
-                } catch (IOException e) {
-                    e.printStackTrace();
+                wordList = WordLadder.getWordList(difficulty);
+                String selectedLadder = ladders[rand.nextInt(ladders.length)];
+                String[] parts = selectedLadder.split(":");
+
+                System.out.println(selectedLadder);
+
+                selected = 3;
+                getBox(selected).getStyleClass().add("selected");
+
+                for (int i = 0; i < 3; i++) {
+                    Label box = (Label) wordGrid.getChildren().get(i);
+
+                    box.setText(Character.toString(parts[0].charAt(i)).toUpperCase());
                 }
 
-                String[] array = lines.toArray(new String[0]);
+                for (int i = 0; i < 3; i++) {
+                    Label box = (Label) wordGrid.getChildren().get(i + 9);
 
-                // Find all one-letter-away pairs
-
-                List<String> pairsList = new ArrayList<>();
-                    
-                for (int i = 0; i < array.length; i++) {
-                    for (int j = 0; j < array.length; j++) {
-                        if (i == j) continue;
-
-                        String firstWord = array[i];
-                        String secondWord = array[j];
-
-                        if (firstWord.charAt(0) == secondWord.charAt(0) && firstWord.charAt(1) == secondWord.charAt(1)) { // last letter changed
-                            pairsList.add(firstWord + ":" + secondWord + ":2");
-
-                            continue;
-                        }
-                        if (firstWord.charAt(0) == secondWord.charAt(0) && firstWord.charAt(2) == secondWord.charAt(2)) { // middle letter changed
-                            pairsList.add(firstWord + ":" + secondWord + ":1");
-
-                            continue;
-                        }
-                        if (firstWord.charAt(1) == secondWord.charAt(1) && firstWord.charAt(2) == secondWord.charAt(2)) { // first letter changed
-                            pairsList.add(firstWord + ":" + secondWord + ":0");
-
-                            continue;
-                        }
-                    }
-                }
-                        
-                String[] pairs = pairsList.toArray(new String[0]);
-
-                // Find all valid three word chains
-
-                List<String> result = new ArrayList<>();
-                Map<String, List<String[]>> pairMap1 = new HashMap<>(); // Index pairs by their starting word.
-
-                for (String pair : pairs) {
-                    String[] p = pair.split(":");
-
-                    pairMap1.computeIfAbsent(p[0], k -> new ArrayList<>()).add(p);
+                    box.setText(Character.toString(parts[3].charAt(i)).toUpperCase());
                 }
 
-                for (String pair : pairs) {
-                    String[] p = pair.split(":");
+                break;
+            case 1:
 
-                    String first = p[0];
-                    String middle = p[1];
-                    String position = p[2];
-
-                    List<String[]> matches = pairMap1.get(middle);
-
-                    if (matches == null) continue;
-
-                    for (String[] next : matches) {
-                        if (position.equals(next[2])) continue;
-
-                        result.add(first + ":" + middle + ":" + next[1] + ":" + position + ":" + next[2]);
-                    }
-                }
-
-                String[] threePairs = result.toArray(new String[0]);
-                    
-                // Find all possible four word chains
-
-                List<String> fourList = new ArrayList<>();
-                Map<String, List<String[]>> pairMap2 = new HashMap<>(); // Index pairs by their starting word.
-                Set<String> existingPairs = new HashSet<>(); // Store existing two-pair combinations.
-
-                for (String pair : pairs) {
-                    String[] p = pair.split(":");
-
-                    pairMap2.computeIfAbsent(p[0], k -> new ArrayList<>()).add(p);
-                    existingPairs.add(p[0] + ":" + p[1]);
-                }
-
-                Set<String> existingThreePairs = new HashSet<>(); // Store existing three-pair combinations.
-                List<String[]> parsedThreePairs = new ArrayList<>(); // Parse threePairs once.
-
-                for (String three : threePairs) {
-                    String[] p = three.split(":");
-
-                    parsedThreePairs.add(p);
-                    existingThreePairs.add(p[0] + ":" + p[2]);
-                }
-
-                // Generate four-pair combinations.
-                for (String[] three : parsedThreePairs) {
-                    String firstWord = three[0];
-                    String secondWord = three[1];
-                    String thirdWord = three[2];
-                    List<String[]> matches = pairMap2.get(thirdWord);
-
-                    if (matches == null) continue;
-
-                    for (String[] pair : matches) {
-                        String endWord = pair[1];
-
-                        if (secondWord.equals(endWord)) continue; // Original conditions.
-                        if (three[4].equals(pair[2])) continue;
-                        if (existingPairs.contains(firstWord + ":" + endWord)) continue; // Check whether the first and fourth words already have a direct pair.
-                        if (existingThreePairs.contains(firstWord + ":" + endWord)) continue; // Check whether the first and fourth words already have a three-pair connection.
-
-                        fourList.add(firstWord + ":" + secondWord + ":" + thirdWord + ":" + endWord + ":" + three[3] + ":" + three[4] + ":" + pair[2]);
-                        //System.out.println(firstWord + ":" + secondWord + ":" + thirdWord + ":" + endWord + ":" + three[3] + ":" + three[4] + ":" + pair[2]);
-                    }
-                }
-
-                finalArray = fourList.toArray(new String[0]);
+                break;
+            case 2:
 
                 break;
         }
 
-        return finalArray;
+        initializing = false;
+    }
+
+    public void insertLetter(String key) {
+        if (initializing) return;
+        if (!key.equals("BACK_SPACE")) {
+            Label selectedBox = getBox(selected);
+
+            if (getBox(selected - 1).getStyleClass().contains("invalid")
+             || getBox(selected - 1).getStyleClass().contains("not-one-off"))
+                return;
+
+            if (selected == 5 || selected == 8 && selectedBox.getText() == "") { // typed full word
+                Set<String> set = new HashSet<>(Arrays.asList(wordList));
+                Set<String> pairSet = new HashSet<>(Arrays.asList(WordLadder.getPairs(wordList, true)));
+
+                String fullWord = (getBox(selected - 2).getText()
+                        + getBox(selected - 1).getText()
+                        + key).toLowerCase();
+
+                boolean found = set.contains(fullWord);
+
+                if (found) {
+                    String prevWord = (getBox(selected - 5).getText()
+                            + getBox(selected - 4).getText()
+                            + getBox(selected - 3).getText()).toLowerCase();
+
+                    Boolean oneOff = pairSet.contains(prevWord + ":" + fullWord);
+
+                    for (int i = selected; i > selected - 3; i--) {
+                        getBox(i).getStyleClass().remove("invalid");
+                        getBox(i).getStyleClass().add(oneOff ? "valid" : "not-one-off");
+                        
+                    }
+                } else {
+                    for (int i = selected; i > selected - 3; i--) {
+                        getBox(i).getStyleClass().remove("valid");
+                        getBox(i).getStyleClass().add("invalid");
+                    }
+                }
+
+                //System.out.println((found ? "Contains " : "Does not contain ") + fullWord);
+            }
+
+            if (selected == 8 && selectedBox.getText() == "") {
+                selectedBox.setText(key);
+
+                Set<String> pairSet = new HashSet<>(Arrays.asList(WordLadder.getPairs(wordList, true)));
+                String[] ladder = getFullLadder();
+
+                if (pairSet.contains(ladder[0] + ":" + ladder[1])
+                 && pairSet.contains(ladder[1] + ":" + ladder[2])
+                 && pairSet.contains(ladder[2] + ":" + ladder[3])) { // change with diff
+                    for (int i = 0; i < wordGrid.getChildren().size(); i++)
+                        getBox(i).getStyleClass().add("correct");
+                
+                    initializeWordLadder(wordGrid.getColumnCount() - 3);
+                }
+                return;
+            } else if (selected == 8 && selectedBox.getText() != "")
+                return;
+
+            selectedBox.setText(key);
+            selectedBox.getStyleClass().remove("selected");
+            getBox(selected + 1).getStyleClass().add("selected");
+
+            selected += 1;
+        } else {
+            if (selected == 3)
+                return;
+
+            if (selected == 6) {
+                for (int i = selected - 1; i > selected - 4; i--) {
+                    getBox(i).getStyleClass().remove("valid");
+                    getBox(i).getStyleClass().remove("invalid");
+                    getBox(i).getStyleClass().remove("not-one-off");
+                }
+            }
+
+            Label selectedBox = getBox(selected);
+
+            if (selected == 8 && selectedBox.getText() != "") {
+                for (int i = 0; i < wordGrid.getChildren().size(); i++)
+                        getBox(i).getStyleClass().remove("correct");
+                selectedBox.setText("");
+
+                for (int i = selected; i > selected - 3; i--) {
+                    getBox(i).getStyleClass().remove("valid");
+                    getBox(i).getStyleClass().remove("invalid");
+                    getBox(i).getStyleClass().remove("not-one-off");
+                }
+
+                return;
+            }
+
+            Label prevBox = getBox(selected - 1);
+
+            prevBox.setText("");
+            selectedBox.getStyleClass().remove("selected");
+            prevBox.getStyleClass().add("selected");
+
+            selected -= 1;
+        }
     }
 }
