@@ -1,3 +1,9 @@
+.dialog-header {
+    -fx-font-size: 20px;
+    -fx-font-family: "Arial Black";
+    -fx-label-padding: 0 0 0 5;
+}
+
 .header1 {
     -fx-font-size: 50px;
     -fx-font-family: "Arial Black";
@@ -13,11 +19,11 @@
     -fx-text-overrun: clip;
 }
 
-.button{
+.button {
     -fx-cursor: "hand"
 }
 
-.radio-button{
+.radio-button {
     -fx-cursor: "hand"
 }
 

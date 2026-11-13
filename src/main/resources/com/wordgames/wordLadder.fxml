@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.ButtonType?>
+<?import javafx.scene.control.DialogPane?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -38,6 +40,22 @@
                   <Label styleClass="ladderInput" stylesheets="@stylesheet.css" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
                </children>
             </GridPane>
+         </center>
+      </BorderPane>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <DialogPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" style="-fx-border-radius: 3; -fx-border-color: black;" visible="false" BorderPane.alignment="CENTER">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+               </content>
+               <header>
+                  <Label styleClass="dialog-header" stylesheets="@stylesheet.css" text="Congratulations" />
+               </header>
+               <buttonTypes>
+                  <ButtonType fx:constant="NEXT" />
+                  <ButtonType fx:constant="CLOSE" />
+               </buttonTypes>
+            </DialogPane>
          </center>
       </BorderPane>
    </children>
