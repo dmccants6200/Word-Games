@@ -68,7 +68,9 @@ public class MainSceneController {
         Scene scene = new Scene(wordLadderUI.load(), 640, 480);
 
         WordLadderController ladderController = wordLadderUI.getController();
-        ladderController.initializeWordLadder(DIFFICULTY);
+        ladderController.initialize();
+        ladderController.setDifficulty(DIFFICULTY);
+        ladderController.initializeWordLadder();
 
         scene.setOnKeyPressed(keyEvent -> {
             if (!(keyEvent.getCode().isLetterKey() || keyEvent.getCode().toString().equals("BACK_SPACE"))) return;

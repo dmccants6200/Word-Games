@@ -13,66 +13,68 @@ import java.util.Set;
 public class WordLadder {
     private static String[] finalArray = new String[0];
 
-    public static String[] getPairs(String[] array) {
-        List<String> pairsList = new ArrayList<>();
+    public static String[] getWordList(int difficulty) {
+        String filePath = null; // path to text file
 
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array.length; j++) {
-                if (i == j) continue;
+        filePath = "src\\main\\java\\com\\wordgames\\WordBanks\\" + (difficulty == 0 ? "easy" : (difficulty == 1 ? "medium" : "hard")) + ".txt";
 
-                String firstWord = array[i];
-                String secondWord = array[j];
+        List<String> lines = new ArrayList<>();
 
-                if (firstWord.charAt(0) == secondWord.charAt(0) && firstWord.charAt(1) == secondWord.charAt(1)) { // last letter changed
-                    pairsList.add(firstWord + ":" + secondWord + ":2");
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            List<String> allLines = br.readAllLines();
 
-                    continue;
-                } else if (firstWord.charAt(0) == secondWord.charAt(0) && firstWord.charAt(2) == secondWord.charAt(2)) { // middle letter changed
-                    pairsList.add(firstWord + ":" + secondWord + ":1");
+            for (String line : allLines) {
+                if (line == null) continue;
+                if (line.length() > difficulty + 3 || line.matches(".*[^a-zA-Z].*")) continue;
 
-                    continue;
-                } else if (firstWord.charAt(1) == secondWord.charAt(1) && firstWord.charAt(2) == secondWord.charAt(2)) { // first letter changed{
-                    pairsList.add(firstWord + ":" + secondWord + ":0");
-
-                    continue;
-                }
+                lines.add(line.toLowerCase());
             }
+
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-                
-        return pairsList.toArray(new String[0]);            
+
+        return lines.toArray(new String[0]);
     }
 
-    public static String[] getPairs(String[] array, Boolean noPositions) {
-        List<String> pairsList = new ArrayList<>();
+    public static String[] getPairs(int difficulty, boolean noPositions) {
+        String[] words = getWordList(difficulty);
 
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array.length; j++) {
-                if (i == j) continue;
+        Map<String, List<String>> firstTwo = new HashMap<>();
+        Map<String, List<String>> firstLast = new HashMap<>();
+        Map<String, List<String>> lastTwo = new HashMap<>();
 
-                String firstWord = array[i];
-                String secondWord = array[j];
+        for (String word : words) {
+            firstTwo.computeIfAbsent(word.substring(0, 2), k -> new ArrayList<>()).add(word);
+            firstLast.computeIfAbsent("" + word.charAt(0) + word.charAt(2), k -> new ArrayList<>()).add(word);
+            lastTwo.computeIfAbsent(word.substring(1, 3), k -> new ArrayList<>()).add(word);
+        }
 
-                if (firstWord.charAt(0) == secondWord.charAt(0) && firstWord.charAt(1) == secondWord.charAt(1)) { // last letter changed
-                    pairsList.add(firstWord + ":" + secondWord);
+        List<String> pairs = new ArrayList<>();
 
-                    continue;
-                } else if (firstWord.charAt(0) == secondWord.charAt(0) && firstWord.charAt(2) == secondWord.charAt(2)) { // middle letter changed
-                    pairsList.add(firstWord + ":" + secondWord);
+        for (String word : words) {
+            String[] keys = {word.substring(0, 2), "" + word.charAt(0) + word.charAt(2), word.substring(1, 3)};
 
-                    continue;
-                } else if (firstWord.charAt(1) == secondWord.charAt(1) && firstWord.charAt(2) == secondWord.charAt(2)) { // first letter changed{
-                    pairsList.add(firstWord + ":" + secondWord);
+            for (int position = 0; position < 3; position++) {
+                Map<String, List<String>> map = position == 0 ? firstTwo : position == 1 ? firstLast : lastTwo;
+                List<String> matches = map.get(keys[position]);
 
-                    continue;
+                if (matches == null) continue;
+
+                for (String match : matches) {
+                    if (word.equals(match)) continue;
+
+                    pairs.add(word + ":" + match + (noPositions ? "" : ":" + (2 - position)));
                 }
             }
         }
-                
-        return pairsList.toArray(new String[0]);            
+
+        return pairs.toArray(new String[0]);
     }
 
     public static String[] generateLadder(int difficulty) {
-        String[] pairs = getPairs(getWordList(difficulty)); // Find all one-letter-away pairs
+        String[] pairs = getPairs(difficulty, false); // Find all one-letter-away pairs
 
         // Find all valid three word chains
 
@@ -153,38 +155,5 @@ public class WordLadder {
         //System.out.println("Finished array");
 
         return finalArray;
-    }
-
-    public static String[] getWordList(int difficulty) {
-        String filePath = null; // path to text file
-
-        switch (difficulty) {
-            case 0:
-                filePath = "src\\main\\java\\com\\wordgames\\WordBanks\\easy.txt";
-
-                break;
-            case 1:
-                filePath = "src\\main\\java\\com\\wordgames\\WordBanks\\medium.txt";
-
-                break;
-            case 2:
-                filePath = "src\\main\\java\\com\\wordgames\\WordBanks\\hard.txt";
-
-                break;
-        }
-
-        List<String> lines = new ArrayList<>();
-                    
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                if (line.length() > difficulty + 3 || line.matches(".*[^a-zA-Z].*")) continue;
-                lines.add(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return lines.toArray(new String[0]);
     }
 }

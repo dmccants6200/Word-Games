@@ -29,7 +29,6 @@
 
 .ladderInput {
     -fx-alignment: center;
-    -fx-pref-height: "50px";
     -fx-font-size: 35px;
     -fx-text-align: center;
     -fx-max-height: 75px;
@@ -53,22 +52,29 @@
     -fx-text-fill: yellow
 }
 
-.valid {
-    -fx-text-fill: green
-}
-
 .invalid {
     -fx-text-fill: red
 }
 
-.incorrect {
-    -fx-border-color: red
-}
-
-.no-chain {
-    -fx-border-color: yellow
-}
-
 .correct {
     -fx-border-color: green
+}
+
+.jumble-input {
+    -fx-border-color: black;
+    -fx-border-width: 2;
+    -fx-font-size: 30px;
+    -fx-max-height: 50px;
+    -fx-pref-height: 50px;
+    -fx-min-height: 50px;
+    -fx-max-width: 50px;
+    -fx-pref-width: 50px;
+    -fx-min-width: 50px;
+}
+
+.jumble-label {
+    -fx-background-color: grey;
+    -fx-border-color: black;
+    -fx-border-width: 2;
+    -fx-font-size: 30px;
 }

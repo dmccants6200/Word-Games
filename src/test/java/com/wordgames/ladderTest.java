@@ -10,9 +10,14 @@ public class LadderTest {
         WordLadder.generateLadder(0);
 
         System.out.println("Execution time: " + (System.nanoTime() - startTime) / 1_000_000 + " ms");
+    }
 
-        //for(String line : easyArray) {
-        //    System.out.println(line);
-        //}
+    @Test
+    void findPairs() {
+        final long startTime = System.nanoTime();
+
+        WordLadder.getPairs(0, false);
+
+        System.out.println("Execution time: " + (System.nanoTime() - startTime) / 1_000_000 + " ms");
     }
 }
