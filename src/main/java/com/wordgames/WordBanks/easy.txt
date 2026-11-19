@@ -137,6 +137,8 @@ fox
 fry
 fun
 fur
+gag
+gal
 gap
 gas
 gay
@@ -144,7 +146,6 @@ gel
 gem
 get
 gig
-gin
 git
 gob
 god
@@ -270,13 +271,13 @@ orc
 ore
 our
 out
-owd
 owe
 owl
 own
 pad
 pal
 pan
+par
 pat
 paw
 pay
@@ -328,6 +329,7 @@ run
 rut
 rye
 sad
+sag
 sap
 sat
 saw
@@ -423,7 +425,6 @@ yam
 yap
 yaw
 yay
-yea
 yen
 yes
 yet

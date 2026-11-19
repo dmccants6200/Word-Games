@@ -17,7 +17,7 @@ public class MainSceneController {
     public int DIFFICULTY;
 
     @FXML
-    private Button continueButton, playButton, playWordLadder, titleScreenButton;
+    private Button continueButton, playButton, playWordLadder, playJumble, titleScreenButton;
 
     @FXML
     private BorderPane difficultyMenu, titleScreen, wordLadderPane;
@@ -63,7 +63,7 @@ public class MainSceneController {
     }
 
     @FXML
-    void startWordLadder(ActionEvent event) throws IOException{
+    void startWordLadder(ActionEvent event) throws IOException {
         FXMLLoader wordLadderUI = new FXMLLoader(App.class.getResource("wordLadder.fxml"));
         Scene scene = new Scene(wordLadderUI.load(), 640, 480);
 
@@ -81,6 +81,30 @@ public class MainSceneController {
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         stage.hide();
         stage.setTitle("Word Games: Word Ladder");
+        stage.setScene(scene);
+        stage.setFullScreenExitHint("");
+        stage.show();
+    }
+
+    @FXML
+    void startJumble(ActionEvent event) throws IOException {
+        FXMLLoader jumbleUI = new FXMLLoader(App.class.getResource("jumble.fxml"));
+        Scene scene = new Scene(jumbleUI.load(), 640, 480);
+
+        JumbleController jumbleController = jumbleUI.getController();
+        jumbleController.initialize();
+        jumbleController.setDifficulty(DIFFICULTY);
+        jumbleController.initializeJumble();
+
+        scene.setOnKeyPressed(keyEvent -> {
+            if (!(keyEvent.getCode().isLetterKey() || keyEvent.getCode().toString().equals("BACK_SPACE") || keyEvent.getCode().isArrowKey())) return;
+            
+            jumbleController.insertLetter(keyEvent.getCode().toString());
+        });
+
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage.hide();
+        stage.setTitle("Word Games: Jumble");
         stage.setScene(scene);
         stage.setFullScreenExitHint("");
         stage.show();

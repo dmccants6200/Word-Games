@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonType?>
+<?import javafx.scene.control.DialogPane?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.wordgames.JumbleController">
    <children>
       <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
-            <VBox alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="156.0" spacing="3.0" BorderPane.alignment="CENTER">
+            <VBox fx:id="jumbleContainer" alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="156.0" spacing="3.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="156.0" styleClass="jumble-label" stylesheets="@stylesheet.css" text="Label" VBox.vgrow="NEVER">
+                  <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="156.0" styleClass="jumble-label" stylesheets="@stylesheet.css" VBox.vgrow="NEVER">
                      <font>
                         <Font size="25.0" />
                      </font></Label>
@@ -31,29 +36,31 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" styleClass="jumble-input" stylesheets="@stylesheet.css" text="W" textAlignment="CENTER">
+                        <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" styleClass="jumble-input" stylesheets="@stylesheet.css" textAlignment="CENTER">
                            <font>
-                              <Font name="Arial Black" size="25.0" />
+                              <Font name="Arial Black" size="22.0" />
                            </font>
                         </Label>
-                        <Circle fill="TRANSPARENT" radius="23.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" GridPane.halignment="CENTER">
+                        <Circle fill="TRANSPARENT" radius="25.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" visible="false" GridPane.halignment="CENTER">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
                         </Circle>
-                        <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="40.0" styleClass="jumble-input" stylesheets="@stylesheet.css" text="W" textAlignment="CENTER" GridPane.columnIndex="1">
+                        <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="40.0" styleClass="jumble-input" stylesheets="@stylesheet.css" textAlignment="CENTER" GridPane.columnIndex="1">
                            <font>
                               <Font name="Arial Black" size="22.0" />
                            </font>
                         </Label>
-                        <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" styleClass="jumble-input" stylesheets="@stylesheet.css" text="W" textAlignment="CENTER" GridPane.columnIndex="2">
+                        <Circle fill="TRANSPARENT" layoutX="35.0" layoutY="35.0" radius="25.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                        <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" styleClass="jumble-input" stylesheets="@stylesheet.css" textAlignment="CENTER" GridPane.columnIndex="2">
                            <font>
                               <Font name="Arial Black" size="22.0" />
                            </font>
                         </Label>
+                        <Circle fill="TRANSPARENT" layoutX="88.0" layoutY="35.0" radius="25.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
                      </children>
                   </GridPane>
-                  <Label alignment="CENTER" layoutX="10.0" layoutY="159.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="156.0" styleClass="jumble-label" stylesheets="@stylesheet.css" text="Label">
+                  <Label alignment="CENTER" layoutX="10.0" layoutY="159.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="156.0" styleClass="jumble-label" stylesheets="@stylesheet.css">
                      <font>
                         <Font size="25.0" />
                      </font>
@@ -68,29 +75,31 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" styleClass="jumble-input" stylesheets="@stylesheet.css" text="W" textAlignment="CENTER">
+                        <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" styleClass="jumble-input" stylesheets="@stylesheet.css" textAlignment="CENTER">
                            <font>
-                              <Font name="Arial Black" size="25.0" />
+                              <Font name="Arial Black" size="22.0" />
                            </font>
                         </Label>
-                        <Circle fill="TRANSPARENT" radius="23.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" GridPane.halignment="CENTER">
+                        <Circle fill="TRANSPARENT" radius="25.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" visible="false" GridPane.halignment="CENTER">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
                         </Circle>
-                        <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="40.0" styleClass="jumble-input" stylesheets="@stylesheet.css" text="W" textAlignment="CENTER" GridPane.columnIndex="1">
+                        <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="40.0" styleClass="jumble-input" stylesheets="@stylesheet.css" textAlignment="CENTER" GridPane.columnIndex="1">
                            <font>
                               <Font name="Arial Black" size="22.0" />
                            </font>
                         </Label>
-                        <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" styleClass="jumble-input" stylesheets="@stylesheet.css" text="W" textAlignment="CENTER" GridPane.columnIndex="2">
+                        <Circle fill="TRANSPARENT" layoutX="35.0" layoutY="35.0" radius="25.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                        <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" styleClass="jumble-input" stylesheets="@stylesheet.css" textAlignment="CENTER" GridPane.columnIndex="2">
                            <font>
                               <Font name="Arial Black" size="22.0" />
                            </font>
                         </Label>
+                        <Circle fill="TRANSPARENT" layoutX="88.0" layoutY="35.0" radius="25.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
                      </children>
                   </GridPane>
-                  <Label alignment="CENTER" layoutX="10.0" layoutY="212.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="156.0" styleClass="jumble-label" stylesheets="@stylesheet.css" text="Label">
+                  <Label alignment="CENTER" layoutX="10.0" layoutY="212.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="156.0" styleClass="jumble-label" stylesheets="@stylesheet.css">
                      <font>
                         <Font size="25.0" />
                      </font>
@@ -105,30 +114,123 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" styleClass="jumble-input" stylesheets="@stylesheet.css" text="W" textAlignment="CENTER">
+                        <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" styleClass="jumble-input" stylesheets="@stylesheet.css" textAlignment="CENTER">
                            <font>
-                              <Font name="Arial Black" size="25.0" />
+                              <Font name="Arial Black" size="22.0" />
                            </font>
                         </Label>
-                        <Circle fill="TRANSPARENT" radius="23.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" GridPane.halignment="CENTER">
+                        <Circle fill="TRANSPARENT" radius="25.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" visible="false" GridPane.halignment="CENTER">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
                         </Circle>
-                        <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="40.0" styleClass="jumble-input" stylesheets="@stylesheet.css" text="W" textAlignment="CENTER" GridPane.columnIndex="1">
+                        <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="40.0" styleClass="jumble-input" stylesheets="@stylesheet.css" textAlignment="CENTER" GridPane.columnIndex="1">
                            <font>
                               <Font name="Arial Black" size="22.0" />
                            </font>
                         </Label>
-                        <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" styleClass="jumble-input" stylesheets="@stylesheet.css" text="W" textAlignment="CENTER" GridPane.columnIndex="2">
+                        <Circle fill="TRANSPARENT" layoutX="35.0" layoutY="35.0" radius="25.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                        <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" styleClass="jumble-input" stylesheets="@stylesheet.css" textAlignment="CENTER" GridPane.columnIndex="2">
                            <font>
                               <Font name="Arial Black" size="22.0" />
                            </font>
                         </Label>
+                        <Circle fill="TRANSPARENT" layoutX="88.0" layoutY="35.0" radius="25.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
                      </children>
                   </GridPane>
                </children>
             </VBox>
+         </center>
+         <bottom>
+            <BorderPane prefHeight="58.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <top>
+                  <Label fx:id="clueLabel" alignment="BOTTOM_CENTER" textAlignment="CENTER" wrapText="true" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="Arial" size="20.0" />
+                     </font>
+                     <BorderPane.margin>
+                        <Insets />
+                     </BorderPane.margin>
+                     <padding>
+                        <Insets bottom="5.0" />
+                     </padding>
+                  </Label>
+               </top>
+               <center>
+                  <GridPane fx:id="clueGrid" alignment="CENTER_RIGHT" hgap="3.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="156.0" BorderPane.alignment="CENTER">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" styleClass="jumble-input" stylesheets="@stylesheet.css" textAlignment="CENTER">
+                           <font>
+                              <Font name="Arial Black" size="22.0" />
+                           </font>
+                        </Label>
+                        <Circle fill="TRANSPARENT" radius="25.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" GridPane.halignment="CENTER">
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                        </Circle>
+                        <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="40.0" styleClass="jumble-input" stylesheets="@stylesheet.css" textAlignment="CENTER" GridPane.columnIndex="1">
+                           <font>
+                              <Font name="Arial Black" size="22.0" />
+                           </font>
+                        </Label>
+                        <Circle fill="TRANSPARENT" layoutX="35.0" layoutY="35.0" radius="25.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                        <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" styleClass="jumble-input" stylesheets="@stylesheet.css" textAlignment="CENTER" GridPane.columnIndex="2">
+                           <font>
+                              <Font name="Arial Black" size="22.0" />
+                           </font>
+                        </Label>
+                        <Circle fill="TRANSPARENT" layoutX="88.0" layoutY="35.0" radius="25.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                     </children>
+                  </GridPane>
+               </center>
+               <padding>
+                  <Insets bottom="5.0" />
+               </padding>
+            </BorderPane>
+         </bottom>
+         <top>
+            <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="200.0" spacing="5.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="menuButton" mnemonicParsing="false" onAction="#exitToMenu" stylesheets="@stylesheet.css" text="Exit to Menu" />
+               </children>
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
+            </HBox>
+         </top>
+      </BorderPane>
+      <BorderPane layoutX="10.0" layoutY="10.0" pickOnBounds="false" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <DialogPane fx:id="winDialog" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="175.0" prefWidth="300.0" style="-fx-border-radius: 5; -fx-border-width: 2; -fx-border-color: black;" visible="false" BorderPane.alignment="CENTER">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Label alignment="CENTER" text="Press &quot;Next&quot; to start another round." textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <font>
+                              <Font name="Arial Black" size="20.0" />
+                           </font>
+                        </Label>
+                        <Separator layoutX="48.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                        <Separator layoutX="48.0" layoutY="96.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+               <header>
+                  <Label alignment="CENTER" styleClass="dialog-header" stylesheets="@stylesheet.css" text="You Win!" />
+               </header>
+               <buttonTypes>
+                  <ButtonType fx:constant="NEXT" />
+               </buttonTypes>
+            </DialogPane>
          </center>
       </BorderPane>
    </children>

@@ -94,7 +94,7 @@
                   <Label styleClass="header2" stylesheets="@stylesheet.css" text="Jumble" BorderPane.alignment="CENTER" />
                </top>
                <bottom>
-                  <Button disable="true" mnemonicParsing="false" stylesheets="@stylesheet.css" text="Play Jumble" BorderPane.alignment="BOTTOM_CENTER">
+                  <Button fx:id="playJumble" mnemonicParsing="false" onAction="#startJumble" stylesheets="@stylesheet.css" text="Play Jumble" BorderPane.alignment="BOTTOM_CENTER">
                      <BorderPane.margin>
                         <Insets bottom="10.0" />
                      </BorderPane.margin>

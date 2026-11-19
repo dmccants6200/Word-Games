@@ -14,9 +14,7 @@ public class WordLadder {
     private static String[] finalArray = new String[0];
 
     public static String[] getWordList(int difficulty) {
-        String filePath = null; // path to text file
-
-        filePath = "src\\main\\java\\com\\wordgames\\WordBanks\\" + (difficulty == 0 ? "easy" : (difficulty == 1 ? "medium" : "hard")) + ".txt";
+        String filePath = "src\\main\\java\\com\\wordgames\\WordBanks\\" + (difficulty == 0 ? "easy" : (difficulty == 1 ? "medium" : "hard")) + ".txt"; // path to text file
 
         List<String> lines = new ArrayList<>();
 

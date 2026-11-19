@@ -31,21 +31,35 @@
     -fx-alignment: center;
     -fx-font-size: 35px;
     -fx-text-align: center;
-    -fx-max-height: 75px;
-    -fx-pref-height: 75px;
-    -fx-min-height: 75px;
-    -fx-max-width: 75px;
-    -fx-pref-width: 75px;
-    -fx-min-width: 75px;
-    -fx-border-width: 5px;
+    -fx-max-height: 65;
+    -fx-pref-height: 65;
+    -fx-min-height: 65;
+    -fx-max-width: 65;
+    -fx-pref-width: 65;
+    -fx-min-width: 65;
+    -fx-border-width: 2px;
     -fx-border-color: black;
     -fx-background-color: rgb(160, 160, 160);
     -fx-text-fill: black;
     -fx-text-overrun: clip;
 }
 
+.jumble-input {
+    -fx-font-size: 30px;
+    -fx-max-height: 50px;
+    -fx-pref-height: 50px;
+    -fx-min-height: 50px;
+    -fx-max-width: 50px;
+    -fx-pref-width: 50px;
+    -fx-min-width: 50px;
+    -fx-border-width: 2;
+    -fx-border-color: black;
+    -fx-text-fill: black;
+    -fx-background-color: rgb(160, 160, 160);
+}
+
 .selected {
-    -fx-border-color: blue
+    -fx-border-color: rgb(0, 68, 255)
 }
 
 .not-one-off {
@@ -60,20 +74,9 @@
     -fx-border-color: green
 }
 
-.jumble-input {
-    -fx-border-color: black;
-    -fx-border-width: 2;
-    -fx-font-size: 30px;
-    -fx-max-height: 50px;
-    -fx-pref-height: 50px;
-    -fx-min-height: 50px;
-    -fx-max-width: 50px;
-    -fx-pref-width: 50px;
-    -fx-min-width: 50px;
-}
-
 .jumble-label {
-    -fx-background-color: grey;
+    -fx-background-color: rgb(66, 66, 66);
+    -fx-text-fill: black;
     -fx-border-color: black;
     -fx-border-width: 2;
     -fx-font-size: 30px;

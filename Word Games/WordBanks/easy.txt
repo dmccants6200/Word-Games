@@ -137,6 +137,7 @@ fox
 fry
 fun
 fur
+gal
 gap
 gas
 gay
