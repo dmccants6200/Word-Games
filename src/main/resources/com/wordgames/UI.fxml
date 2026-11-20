@@ -50,7 +50,7 @@
       </BorderPane>
       <BorderPane fx:id="titleScreen" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
-            <Button fx:id="playButton" mnemonicParsing="false" onAction="#closeTitleScreen" stylesheets="@stylesheet.css" text="Play" BorderPane.alignment="BOTTOM_CENTER">
+            <Button fx:id="playButton" mnemonicParsing="false" onAction="#closeTitleScreen" stylesheets="@stylesheet.css" text="Play" textFill="#ee0d0d" BorderPane.alignment="CENTER">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -60,7 +60,7 @@
             </Button>
          </center>
          <top>
-            <Label alignment="BASELINE_CENTER" styleClass="header1" stylesheets="@stylesheet.css" text="Word Games" textAlignment="CENTER" textOverrun="CLIP" BorderPane.alignment="TOP_CENTER">
+            <Label alignment="BASELINE_CENTER" styleClass="header1" stylesheets="@stylesheet.css" text="Word Games" textAlignment="CENTER" textOverrun="CLIP" BorderPane.alignment="CENTER">
                <font>
                   <Font name="Arial" size="12.0" />
                </font>

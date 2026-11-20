@@ -200,10 +200,10 @@
          <top>
             <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="200.0" spacing="5.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="menuButton" mnemonicParsing="false" onAction="#exitToMenu" stylesheets="@stylesheet.css" text="Exit to Menu" />
+                  <Button fx:id="menuButton" focusTraversable="false" mnemonicParsing="false" onAction="#exitToMenu" stylesheets="@stylesheet.css" text="Exit to Menu" />
                </children>
                <padding>
-                  <Insets left="5.0" />
+                  <Insets left="5.0" top="5.0" />
                </padding>
             </HBox>
          </top>

@@ -6,10 +6,18 @@
 
 .header1 {
     -fx-font-size: 50px;
-    -fx-font-family: "Arial Black";
+    -fx-font-family: "Bahnschrift";
     -fx-text-align: center;
     -fx-text-overrun: clip;
     
+    
+}
+
+.header1 .text, .header2 .text {
+    -fx-fill: linear-gradient(from 0% 50% to 0% 100%, #ff8800 0%, #ad5e02 100%);
+    -fx-stroke: #B85C00;
+    -fx-stroke-width: 1.5px;
+    -fx-font-weight: bold;
 }
 
 .header2 {
@@ -20,7 +28,36 @@
 }
 
 .button {
-    -fx-cursor: "hand"
+    -fx-cursor: "hand";
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color: 
+        linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),
+        #9d4024,
+        #d8703b,
+        radial-gradient(center 50% 50%, radius 100%, #d86e3a, #c54e2c);
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+    -fx-font-weight: bold;
+    -fx-font-size: 1.3em;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Tahoma";
+}
+
+#button:hover {
+    -fx-background-color: 
+        linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),
+        #9d4024,
+        #d86e3a,
+        radial-gradient(center 50% 50%, radius 100%, #ea7f4b, #c54e2c);
+}
+#button:pressed {
+    -fx-padding: 10 15 13 15;
+    -fx-background-insets: 2 0 0 0,2 0 3 0, 2 0 4 0, 2 0 5 0;
+}
+#button Text {
+    -fx-fill: white;
+    -fx-effect: dropshadow( gaussian , #a30000 , 0,0,0,2 );
 }
 
 .radio-button {

@@ -65,7 +65,9 @@ public class MainSceneController {
     @FXML
     void startWordLadder(ActionEvent event) throws IOException {
         FXMLLoader wordLadderUI = new FXMLLoader(App.class.getResource("wordLadder.fxml"));
-        Scene scene = new Scene(wordLadderUI.load(), 640, 480);
+        double x = ((Node)event.getSource()).getScene().getWidth(), y = ((Node)event.getSource()).getScene().getHeight();
+        
+        Scene scene = new Scene(wordLadderUI.load(), x, y);
 
         WordLadderController ladderController = wordLadderUI.getController();
         ladderController.initialize();
@@ -79,17 +81,20 @@ public class MainSceneController {
         });
 
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        stage.hide();
+        Boolean fullscreen = stage.isFullScreen();
         stage.setTitle("Word Games: Word Ladder");
         stage.setScene(scene);
         stage.setFullScreenExitHint("");
+        stage.setFullScreen(fullscreen);
         stage.show();
     }
 
     @FXML
     void startJumble(ActionEvent event) throws IOException {
         FXMLLoader jumbleUI = new FXMLLoader(App.class.getResource("jumble.fxml"));
-        Scene scene = new Scene(jumbleUI.load(), 640, 480);
+        double x = ((Node)event.getSource()).getScene().getWidth(), y = ((Node)event.getSource()).getScene().getHeight();
+
+        Scene scene = new Scene(jumbleUI.load(), x, y);
 
         JumbleController jumbleController = jumbleUI.getController();
         jumbleController.initialize();
@@ -103,10 +108,11 @@ public class MainSceneController {
         });
 
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        stage.hide();
+        Boolean fullscreen = stage.isFullScreen();
         stage.setTitle("Word Games: Jumble");
         stage.setScene(scene);
         stage.setFullScreenExitHint("");
+        stage.setFullScreen(fullscreen);
         stage.show();
     }
 }

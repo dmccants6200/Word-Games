@@ -236,8 +236,7 @@ The recipe calls for one ___ of flour and two eggs.:min
 Please ___ the paint thoroughly before using it.:mix
 A large ___ of fans gathered outside the stadium.:mob
 The computer needs a new ___ to run the program.:mod
-___ decided to bring homemade cookies to the picnic.:moe
-The puppy began to ___ happily when it saw its favorite toy.:mog
+He was so handsome he could ___ everyone in the room.:mog
 My ___ packed me a delicious lunch for school.:mom
 He used a sponge to ___ the water off the kitchen floor.:mop
 Dad had to ___ the lawn before the rain arrived.:mow
@@ -259,6 +258,7 @@ A tall ___ tree provided shade beside the farmhouse.:oak
 The sailor used an ___ to row the small boat.:oar
 I ate a bowl of warm ___meal for breakfast.:oat
 It was ___ to see snow falling in the middle of summer.:odd
+The boy created lyrics for the choir that were an ___ to his alma mater.:ode
 Please turn the television ___ before leaving the room.:off
 The ___ symbol is used to measure electrical resistance.:ohm
 Mom used olive ___ to prepare the salad dressing.:oil
@@ -297,13 +297,14 @@ Don't squeeze the balloon to hard or else it'll ___.:pop
 Dad stirred the soup in a large cooking ___ .:pot
 We met our friends at a neighborhood ___ for dinner.:pub
 The little ___ followed its owner around the yard.:pug
+The woman told her friend a funny ___.:pun
 The golden retriever's ___ chased a tennis ball across the grass.:pup
 Please ___ the groceries on the kitchen counter.:put
 The scientist discovered a ___ substance in the laboratory.:rad
 She tied her hair back with a colorful ___ .:rag
 The farmer loaded the ___ into the trailer before heading home.:ram
 We ___ to the store before the rain started.:ran
-The singer practiced her ___ before the big performance.:rap
+The boy wanted to ___ for the talent show.:rap
 A tiny ___ scurried across the kitchen floor.:rat
 The chef served the vegetables ___ instead of cooking them.:raw
 A bright ___ of sunshine broke through the clouds.:ray
@@ -394,7 +395,6 @@ Please ___ both hands to carry the large box.:use
 The workers repaired the ___ system at the concert venue.:vac
 We rented a ___ to transport our furniture across town.:van
 The farmer filled the large ___ with fresh water for the animals.:vat
-The company developed a new ___ to protect its computer systems.:vax
 We took our sick dog to the ___ for a checkup.:vet
 The magician used a clever trick to ___ the audience.:vex
 The hikers traveled ___ a narrow trail through the forest.:via

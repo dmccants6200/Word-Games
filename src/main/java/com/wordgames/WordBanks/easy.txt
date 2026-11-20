@@ -236,7 +236,6 @@ min
 mix
 mob
 mod
-moe
 mog
 mom
 mop
@@ -259,6 +258,7 @@ oak
 oar
 oat
 odd
+ode
 off
 ohm
 oil
@@ -297,6 +297,7 @@ pop
 pot
 pub
 pug
+pun
 pup
 put
 rad
@@ -394,7 +395,6 @@ use
 vac
 van
 vat
-vax
 vet
 vex
 via

@@ -21,6 +21,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 
 public class WordLadderController {
@@ -39,13 +40,16 @@ public class WordLadderController {
     void exitToMenu(ActionEvent event) throws IOException {
         if (initializing) return;
         FXMLLoader mainUI = new FXMLLoader(App.class.getResource("UI.fxml"));
-        Scene scene = new Scene(mainUI.load(), 640, 480);
+        double x = ((Node)event.getSource()).getScene().getWidth(), y = ((Node)event.getSource()).getScene().getHeight();
+
+        Scene scene = new Scene(mainUI.load(), x, y);
 
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        stage.hide();
+        Boolean fullscreen = stage.isFullScreen();
         stage.setTitle("Word Games");
         stage.setScene(scene);
         stage.setFullScreenExitHint("");
+        stage.setFullScreen(fullscreen);
         stage.show();
     }
 
@@ -71,6 +75,36 @@ public class WordLadderController {
 
     public int getDifficulty() {
         return DIFFICULTY;
+    }
+
+    private void setSelected(int index) {
+        selected = index;
+
+        /*double maxTilt = 20;
+
+        double middleColumn = (double)(columnCount + 1) / 2;
+        double middleRow = (double)(rowCount + 1) / 2;
+
+        int columnIndex = (selected % columnCount) + 1;
+        int rowIndex = (selected / columnCount) + 1;
+
+        double columnDist = (double)columnIndex - middleColumn;
+        double rowDist = (double)rowIndex - middleRow;
+
+        double columnMaxDist = (double)columnCount  - middleColumn;
+        double rowMaxDist = (double)rowCount - middleRow;
+
+        double columnPercent = columnDist / columnMaxDist;
+        double rowPercent = rowDist / rowMaxDist;
+
+        System.out.println(maxTilt * columnPercent);
+        System.out.println(maxTilt * rowPercent);
+
+        wordGrid.getTransforms().clear();
+        wordGrid.getTransforms().addAll(
+            new Rotate(maxTilt * rowPercent, Rotate.X_AXIS),
+            new Rotate(maxTilt * columnPercent, Rotate.Y_AXIS)
+        );*/
     }
 
     private Label getBox(int position) {
@@ -113,7 +147,7 @@ public class WordLadderController {
 
         System.out.println(selectedLadder);
 
-        selected = DIFFICULTY + 3;
+        setSelected(DIFFICULTY + 3);
         getBox(selected).getStyleClass().add("selected");
 
         for (int i = 0; i < DIFFICULTY + 3; i++) {
@@ -195,7 +229,7 @@ public class WordLadderController {
             selectedBox.getStyleClass().remove("selected");
             getBox(selected + 1).getStyleClass().add("selected");
 
-            selected += 1;
+            setSelected(selected += 1);
         } else {
             if (selected == columnCount) return;
 
@@ -224,7 +258,7 @@ public class WordLadderController {
             selectedBox.getStyleClass().remove("selected");
             prevBox.getStyleClass().add("selected");
 
-            selected -= 1;
+            setSelected(selected -= 1);
         }
     }
 }

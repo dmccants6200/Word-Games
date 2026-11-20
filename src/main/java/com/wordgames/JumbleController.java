@@ -48,13 +48,16 @@ public class JumbleController {
     void exitToMenu(ActionEvent event) throws IOException {
         if (initializing) return;
         FXMLLoader mainUI = new FXMLLoader(App.class.getResource("UI.fxml"));
-        Scene scene = new Scene(mainUI.load(), 640, 480);
+        double x = ((Node)event.getSource()).getScene().getWidth(), y = ((Node)event.getSource()).getScene().getHeight();
+
+        Scene scene = new Scene(mainUI.load(), x, y);
 
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        stage.hide();
+        Boolean fullscreen = stage.isFullScreen();
         stage.setTitle("Word Games");
         stage.setScene(scene);
         stage.setFullScreenExitHint("");
+        stage.setFullScreen(fullscreen);
         stage.show();
     }
 
@@ -220,7 +223,7 @@ public class JumbleController {
             
             do
                 randomWord = Jumble.randomWord(DIFFICULTY);
-            while (randomWord.equals(answer) || !randomWord.contains(letters[i]) || selectedWords.contains(randomWord));
+            while (randomWord.equals(correctAnswer) || !randomWord.contains(letters[i]) || selectedWords.contains(randomWord));
 
             selectedWords.add(randomWord);
             lettersContained[i] = randomWord.indexOf(letters[i]);
