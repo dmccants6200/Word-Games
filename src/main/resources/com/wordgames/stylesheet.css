@@ -1,33 +1,43 @@
+@font-face {
+    font-family: "Grime Slime";
+    src: url("../wordgames/GrimeSlime-Regular.ttf");
+}
+
 .dialog-header {
     -fx-font-size: 20px;
-    -fx-font-family: "Arial Black";
+    -fx-font-family: "Tahoma";
+    -fx-font-weight: bold;
     -fx-label-padding: 0 0 0 5;
 }
 
+.dialog-header .text {
+    -fx-fill: white;
+    -fx-effect: dropshadow(gaussian, #a30000, 0,0,0,2 );
+}
+
 .header1 {
-    -fx-font-size: 50px;
-    -fx-font-family: "Bahnschrift";
+    -fx-font-size: 60px;
+    -fx-font-family: "Grime Slime";
     -fx-text-align: center;
     -fx-text-overrun: clip;
-    
-    
 }
 
 .header1 .text, .header2 .text {
-    -fx-fill: linear-gradient(from 0% 50% to 0% 100%, #ff8800 0%, #ad5e02 100%);
-    -fx-stroke: #B85C00;
+    -fx-fill: linear-gradient(from 0% 50% to 0% 100%, #d86e3a 0%, #c54e2c 100%);
+    -fx-stroke: #924900;
     -fx-stroke-width: 1.5px;
     -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.75), 4,0,0,1 );
 }
 
 .header2 {
-    -fx-font-size: 35px;
-    -fx-font-family: "Arial Black";
+    -fx-font-size: 40px;
+    -fx-font-family: "Grime Slime";
     -fx-text-align: center;
     -fx-text-overrun: clip;
 }
 
-.button {
+.button, .dialog-pane .button-bar .button {
     -fx-cursor: "hand";
     -fx-padding: 8 15 15 15;
     -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
@@ -37,36 +47,71 @@
         #9d4024,
         #d8703b,
         radial-gradient(center 50% 50%, radius 100%, #d86e3a, #c54e2c);
-    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.75), 4,0,0,1 );
     -fx-font-weight: bold;
     -fx-font-size: 1.3em;
     -fx-text-fill: #ffffff;
     -fx-font-family: "Tahoma";
 }
 
-#button:hover {
+.button:hover, .dialog-pane .button-bar .button:hover {
     -fx-background-color: 
         linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),
         #9d4024,
         #d86e3a,
         radial-gradient(center 50% 50%, radius 100%, #ea7f4b, #c54e2c);
 }
-#button:pressed {
+
+.button:pressed, .dialog-pane .button-bar .button:pressed {
     -fx-padding: 10 15 13 15;
     -fx-background-insets: 2 0 0 0,2 0 3 0, 2 0 4 0, 2 0 5 0;
 }
-#button Text {
+
+.button .text, .ladderInput .text, .jumble-input .text, .jumble-label .text, .clue-label .text {
     -fx-fill: white;
-    -fx-effect: dropshadow( gaussian , #a30000 , 0,0,0,2 );
+    -fx-effect: dropshadow(gaussian, #a30000, 0,0,0,2 );
 }
 
 .radio-button {
-    -fx-cursor: "hand"
+    -fx-cursor: "hand";
+    -fx-font-family: "Tahoma";
+    -fx-font-weight: bold;
+    -fx-font-size: 1.7em;
+}
+
+.radio-button .radio:hover {
+    -fx-background-color: 
+        #9d4024,
+        #d86e3a,
+        radial-gradient(center 50% 50%, radius 100%, #ea7f4b, #c54e2c);
+}
+
+.radio-button .text {
+    -fx-fill: white;
+    -fx-effect: dropshadow(gaussian, #a30000, 0,0,0,2 );
+}
+
+.radio-button .radio {
+    -fx-background-color: 
+        #9d4024,
+        #d8703b,
+        radial-gradient(center 50% 50%, radius 100%, #d86e3a, #c54e2c);
+    -fx-background-insets: 0;
+    -fx-border-width: 2px;
+    -fx-border-color: #9d4024;
+    -fx-border-radius: 50%;
+    
+}
+
+.radio-button:selected .radio .dot {
+    -fx-background-color: #9d4024;
+    -fx-background-insets: 0;
 }
 
 .ladderInput {
     -fx-alignment: center;
-    -fx-font-size: 35px;
+    -fx-font-size: 40px;
+    -fx-font-family: "Tahoma";
     -fx-text-align: center;
     -fx-max-height: 65;
     -fx-pref-height: 65;
@@ -74,15 +119,37 @@
     -fx-max-width: 65;
     -fx-pref-width: 65;
     -fx-min-width: 65;
+    -fx-border-width: 3px;
+    -fx-border-color: #9d4024;
+    -fx-background-color: 
+        radial-gradient(center 50% 50%, radius 100%, #d86e3a, #c54e2c);
+    -fx-text-overrun: clip;
+}
+
+.ladderDisplay {
+    -fx-alignment: center;
+    -fx-font-size: 35px;
+    -fx-font-family: "Arial";
+    -fx-text-align: center;
+    -fx-max-height: 55;
+    -fx-pref-height: 55;
+    -fx-min-height: 55;
+    -fx-max-width: 55;
+    -fx-pref-width: 55;
+    -fx-min-width: 55;
     -fx-border-width: 2px;
-    -fx-border-color: black;
-    -fx-background-color: rgb(160, 160, 160);
+    -fx-border-color: #9d4024;
+    -fx-background-color: 
+        #9d4024,
+        #d8703b,
+        radial-gradient(center 50% 50%, radius 100%, #d86e3a, #c54e2c);
     -fx-text-fill: black;
     -fx-text-overrun: clip;
 }
 
-.jumble-input {
+.jumble-input, .jumble-display {
     -fx-font-size: 30px;
+    -fx-font-family: "Tahoma";
     -fx-max-height: 50px;
     -fx-pref-height: 50px;
     -fx-min-height: 50px;
@@ -90,9 +157,56 @@
     -fx-pref-width: 50px;
     -fx-min-width: 50px;
     -fx-border-width: 2;
-    -fx-border-color: black;
-    -fx-text-fill: black;
-    -fx-background-color: rgb(160, 160, 160);
+    -fx-border-color: #9d4024;
+    -fx-background-color: 
+        radial-gradient(center 50% 50%, radius 100%, #d86e3a, #c54e2c);
+}
+
+.jumble-label, .jumble-label-display {
+    -fx-border-color: #9d4024;
+    -fx-background-color: 
+        radial-gradient(center 50% 50%, radius 100%, #ff8352, #cf5a3c);
+    -fx-border-width: 2;
+    -fx-font-size: 30px;
+    -fx-font-family: "Tahoma";
+    
+}
+
+.clue-label {
+    -fx-padding: 8 15 8 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 10;
+    -fx-background-color: 
+        radial-gradient(center 50% 50%, radius 100%, #d86e3a, #c54e2c);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.75), 4,0,0,1 );
+    -fx-font-weight: bold;
+    -fx-font-size: 1.3em;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Tahoma";
+    -fx-border-width: 2;
+    -fx-border-color: #9d4024;
+    -fx-border-radius: 8;
+}
+
+.Circle {
+    -fx-stroke: #9d4024;
+}
+
+.jumble-display {
+    -fx-max-height: 40px;
+    -fx-pref-height: 40px;
+    -fx-min-height: 40px;
+    -fx-max-width: 40px;
+    -fx-pref-width: 40px;
+    -fx-min-width: 40px;
+    -fx-border-width: 2;
+}
+
+.background {
+    -fx-background-image: url(images/Abstract.png);
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
 }
 
 .selected {
@@ -103,18 +217,36 @@
     -fx-text-fill: yellow
 }
 
+.not-one-off .text {
+    -fx-fill: yellow
+}
+
 .invalid {
     -fx-text-fill: red
+}
+
+.invalid .text {
+    -fx-fill: red
 }
 
 .correct {
     -fx-border-color: green
 }
 
-.jumble-label {
-    -fx-background-color: rgb(66, 66, 66);
-    -fx-text-fill: black;
-    -fx-border-color: black;
-    -fx-border-width: 2;
-    -fx-font-size: 30px;
+.dialog-pane {
+    -fx-background-color: 
+        linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),
+        #9d4024,
+        #d8703b,
+        radial-gradient(center 50% 50%, radius 100%, #d86e3a, #c54e2c);
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-border-color: #9d4024;
+    -fx-border-width: 2px;
+    -fx-max-height: 190;
+    -fx-pref-height: 190;
+    -fx-min-height: 190;
+    -fx-max-width: 300;
+    -fx-pref-width: 300;
+    -fx-min-width: 300;
 }

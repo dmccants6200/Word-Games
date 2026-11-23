@@ -30,13 +30,13 @@ public class JumbleController {
     ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
     @FXML
-    private VBox jumbleContainer;
+    private VBox easyJumble, mediumJumble, hardJumble;
 
     @FXML
     private Label clueLabel;
 
     @FXML
-    private GridPane clueGrid;
+    private GridPane easyClue, mediumClue, hardClue;
 
     @FXML
     private DialogPane winDialog;
@@ -61,17 +61,27 @@ public class JumbleController {
         stage.show();
     }
 
-    Boolean initializing = false;
-    Boolean won = false;
-    private int selected = 0;
-    private int DIFFICULTY;
-    private int WORD_LENGTH;
+    private Boolean initializing = false, won = false;
+    private int selected = 0, DIFFICULTY, WORD_LENGTH;
     String[] wordList = null;
     String correctAnswer;
+
+    VBox currentJumble;
+    GridPane currentClue;
 
     public void setDifficulty(int difficulty) {
         DIFFICULTY = difficulty;
         WORD_LENGTH = difficulty + 3;
+
+        easyJumble.setVisible(difficulty == 0);
+        easyClue.setVisible(difficulty == 0);
+        mediumJumble.setVisible(difficulty == 1);
+        mediumClue.setVisible(difficulty == 1);
+        hardJumble.setVisible(difficulty == 2);
+        hardClue.setVisible(difficulty == 2);
+
+        currentJumble = difficulty == 0 ? easyJumble : (difficulty == 1 ? mediumJumble : hardJumble);
+        currentClue = difficulty == 0 ? easyClue : (difficulty == 1 ? mediumClue : hardClue);
     }
 
     public int getDifficulty() {
@@ -87,18 +97,18 @@ public class JumbleController {
 
     private Label getBox(int index) {
         if (index / WORD_LENGTH <= WORD_LENGTH - 1) {
-            GridPane grid = (GridPane)(Node)jumbleContainer.getChildren().get((index / WORD_LENGTH) * 2 + 1);
+            GridPane grid = (GridPane)(Node)currentJumble.getChildren().get((index / WORD_LENGTH) * 2 + 1);
             
             return (Label)(Node)grid.getChildren().get((index % WORD_LENGTH) * 2);
         } else
-            return (Label)(Node)clueGrid.getChildren().get((index % WORD_LENGTH) * 2);
+            return (Label)(Node)currentClue.getChildren().get((index % WORD_LENGTH) * 2);
     }
 
     private String getCircled() {
         String circledLetters = "";
 
         for (int i = 0; i < WORD_LENGTH * WORD_LENGTH; i++) {
-            GridPane grid = (GridPane)(Node)jumbleContainer.getChildren().get((i / WORD_LENGTH) * 2 + 1);
+            GridPane grid = (GridPane)(Node)currentJumble.getChildren().get((i / WORD_LENGTH) * 2 + 1);
             Circle circle = (Circle)(Node)grid.getChildren().get((i % WORD_LENGTH) * 2 + 1);
 
             if (!circle.isVisible()) continue;
@@ -133,22 +143,22 @@ public class JumbleController {
             invalid = true; break;
         }
 
-        for (int i = 0; i < (clueGrid.getChildren().size() / 2); i++) {
-            Label box = (Label)(Node)clueGrid.getChildren().get(i * 2);
+        for (int i = 0; i < (currentClue.getChildren().size() / 2); i++) {
+            Label box = (Label)(Node)currentClue.getChildren().get(i * 2);
             fullWord += box.getText().toLowerCase();
         }
 
         if ((!(set.contains(fullWord) && Jumble.areAnagrams(scrambledWord, fullWord)) || invalid) && allFilled() && fullWord.length() == WORD_LENGTH) {
-            for (int i = 0; i < (clueGrid.getChildren().size() / 2); i++) {
-                Label box = (Label)(Node)clueGrid.getChildren().get(i * 2);
+            for (int i = 0; i < (currentClue.getChildren().size() / 2); i++) {
+                Label box = (Label)(Node)currentClue.getChildren().get(i * 2);
                 if(!box.getStyleClass().contains("invalid")) box.getStyleClass().add("invalid");
             }
 
             return;
         }
 
-        for (int i = 0; i < (clueGrid.getChildren().size() / 2); i++) {
-            Label box = (Label)(Node)clueGrid.getChildren().get(i * 2);
+        for (int i = 0; i < (currentClue.getChildren().size() / 2); i++) {
+            Label box = (Label)(Node)currentClue.getChildren().get(i * 2);
             box.getStyleClass().remove("invalid");
         }
     }
@@ -159,8 +169,8 @@ public class JumbleController {
         
         String typedClue = "";
 
-        for (int i = 0; i < (clueGrid.getChildren().size() / 2); i++) {
-            Label box = (Label)(Node)clueGrid.getChildren().get(i * 2);
+        for (int i = 0; i < (currentClue.getChildren().size() / 2); i++) {
+            Label box = (Label)(Node)currentClue.getChildren().get(i * 2);
             typedClue += box.getText().toLowerCase();
         }
 
@@ -190,14 +200,14 @@ public class JumbleController {
             
             if (i / WORD_LENGTH > WORD_LENGTH - 1) continue;
 
-            GridPane grid = (GridPane)(Node)jumbleContainer.getChildren().get((i / WORD_LENGTH) * 2 + 1);
+            GridPane grid = (GridPane)(Node)currentJumble.getChildren().get((i / WORD_LENGTH) * 2 + 1);
             Circle circle = (Circle)(Node)grid.getChildren().get((i % WORD_LENGTH) * 2 + 1);
             circle.setVisible(false);
         }
 
         getBox(selected).getStyleClass().add("selected");
 
-        String[] jumbles = Jumble.generateJumble(0);
+        String[] jumbles = Jumble.generateJumble(DIFFICULTY);
         
         Random rand = new Random();
 
@@ -228,8 +238,8 @@ public class JumbleController {
             selectedWords.add(randomWord);
             lettersContained[i] = randomWord.indexOf(letters[i]);
 
-            Label label = (Label)(Node)jumbleContainer.getChildren().get(i * 2);
-            GridPane grid = (GridPane)(Node)jumbleContainer.getChildren().get(i * 2 + 1);
+            Label label = (Label)(Node)currentJumble.getChildren().get(i * 2);
+            GridPane grid = (GridPane)(Node)currentJumble.getChildren().get(i * 2 + 1);
             String scambledWord;
 
             do
@@ -284,7 +294,7 @@ public class JumbleController {
             String scrambledWord;
 
             if (selected / WORD_LENGTH <= WORD_LENGTH - 1)
-                scrambledWord = ((Label)(Node)jumbleContainer.getChildren().get((selected / WORD_LENGTH) * 2)).getText().toLowerCase();
+                scrambledWord = ((Label)(Node)currentJumble.getChildren().get((selected / WORD_LENGTH) * 2)).getText().toLowerCase();
             else
                 scrambledWord = getCircled();
 
@@ -297,7 +307,7 @@ public class JumbleController {
 
             Set<String> set = new HashSet<>(Arrays.asList(wordList));
 
-            if (grid != clueGrid || (grid == clueGrid && allFilled())) {
+            if (grid != currentClue || (grid == currentClue && allFilled())) {
                 for (int i = 0; i < (grid.getChildren().size() / 2); i++) {
                     Label box = (Label)(Node)grid.getChildren().get(i * 2);
 

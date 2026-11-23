@@ -92,8 +92,6 @@ dip
 doc
 doe
 dog
-don
-doo
 dot
 dry
 dub

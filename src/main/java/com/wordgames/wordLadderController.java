@@ -10,7 +10,12 @@ import java.util.concurrent.TimeUnit;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import javafx.util.Duration;
 
+import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,7 +33,7 @@ public class WordLadderController {
     ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
     @FXML
-    private GridPane wordGrid;
+    private GridPane easyGrid, mediumGrid, hardGrid;
 
     @FXML
     private DialogPane winDialog;
@@ -69,8 +74,35 @@ public class WordLadderController {
     Boolean won = false;
     private int DIFFICULTY;
 
+    GridPane currentGrid;
+    Rotate rotateX;
+    Rotate rotateY;
+
+    private Timeline rotationAnimation;
+
     public void setDifficulty(int difficulty) {
         DIFFICULTY = difficulty;
+
+        easyGrid.setVisible(difficulty == 0);
+        mediumGrid.setVisible(difficulty == 1);
+        hardGrid.setVisible(difficulty == 2);
+
+        currentGrid = difficulty == 0 ? easyGrid : (difficulty == 1 ? mediumGrid : hardGrid);
+        rotateX = new Rotate(0, currentGrid.getWidth() / 2, currentGrid.getHeight() / 2, 0, Rotate.Y_AXIS);
+        rotateY = new Rotate(0, currentGrid.getWidth() / 2, currentGrid.getHeight() / 2, 0, Rotate.X_AXIS);
+
+        currentGrid.layoutBoundsProperty().addListener((obs, oldBounds, bounds) -> {
+            double centerX = bounds.getMinX() + bounds.getWidth() / 2;
+            double centerY = bounds.getMinY() + bounds.getHeight() / 2;
+
+            rotateX.setPivotX(centerX);
+            rotateX.setPivotY(centerY);
+
+            rotateY.setPivotX(centerX);
+            rotateY.setPivotY(centerY);
+        });
+
+        currentGrid.getTransforms().addAll(rotateX, rotateY);
     }
 
     public int getDifficulty() {
@@ -80,35 +112,31 @@ public class WordLadderController {
     private void setSelected(int index) {
         selected = index;
 
-        /*double maxTilt = 20;
+        double maxTilt = 5;
 
-        double middleColumn = (double)(columnCount + 1) / 2;
-        double middleRow = (double)(rowCount + 1) / 2;
+        double columnPercent = (columnCount - 2.0 * (selected % columnCount + 1)) / (columnCount - 1);
+        double rowPercent = (2.0 * (selected / columnCount + 1) - rowCount - 1) / (rowCount - 1);
 
-        int columnIndex = (selected % columnCount) + 1;
-        int rowIndex = (selected / columnCount) + 1;
+        double targetX = maxTilt * columnPercent;
+        double targetY = maxTilt * rowPercent;
 
-        double columnDist = (double)columnIndex - middleColumn;
-        double rowDist = (double)rowIndex - middleRow;
+        // Stop any previous animation
+        if (rotationAnimation != null)
+            rotationAnimation.stop();
 
-        double columnMaxDist = (double)columnCount  - middleColumn;
-        double rowMaxDist = (double)rowCount - middleRow;
+        rotationAnimation = new Timeline(
+            new KeyFrame(
+                Duration.millis(150),
+                new KeyValue(rotateX.angleProperty(), targetX, Interpolator.EASE_BOTH),
+                new KeyValue(rotateY.angleProperty(), targetY, Interpolator.EASE_BOTH)
+            )
+        );
 
-        double columnPercent = columnDist / columnMaxDist;
-        double rowPercent = rowDist / rowMaxDist;
-
-        System.out.println(maxTilt * columnPercent);
-        System.out.println(maxTilt * rowPercent);
-
-        wordGrid.getTransforms().clear();
-        wordGrid.getTransforms().addAll(
-            new Rotate(maxTilt * rowPercent, Rotate.X_AXIS),
-            new Rotate(maxTilt * columnPercent, Rotate.Y_AXIS)
-        );*/
+        rotationAnimation.play();
     }
 
     private Label getBox(int position) {
-        return (Label) wordGrid.getChildren().get(position);
+        return (Label) currentGrid.getChildren().get(position);
     }
 
     private String[] getFullLadder() {
@@ -129,14 +157,14 @@ public class WordLadderController {
     public void initializeWordLadder() {
         initializing = true;
         winDialog.setVisible(false);
-        final String[] ladders = WordLadder.generateLadder(DIFFICULTY);
+        String[] ladders = WordLadder.generateLadder(DIFFICULTY);
         wordList = WordLadder.getWordList(DIFFICULTY);
         Random rand = new Random();
 
-        columnCount = wordGrid.getColumnCount();
-        rowCount = wordGrid.getRowCount();
+        columnCount = currentGrid.getColumnCount();
+        rowCount = currentGrid.getRowCount();
 
-        for (Node box : wordGrid.getChildren()) {
+        for (Node box : currentGrid.getChildren()) {
             ((Label)box).setText("");
             ((Label)box).getStyleClass().remove("correct");
             ((Label)box).getStyleClass().remove("selected");
@@ -154,14 +182,14 @@ public class WordLadderController {
             Label topBox = getBox(i);
             topBox.setText(Character.toString(parts[0].charAt(i)).toUpperCase());
 
-            Label bottomBox = getBox(i + (int)Math.pow(DIFFICULTY + 3, 2)); // 9  16 25
+            Label bottomBox = getBox(i + (int)Math.pow(DIFFICULTY + 3, 2));
             bottomBox.setText(Character.toString(parts[3 + DIFFICULTY].charAt(i)).toUpperCase());
         }
 
         initializing = false;
         won = false;
     }
-
+    
     public void insertLetter(String key) {
         if (initializing || won) return;
 
@@ -174,7 +202,7 @@ public class WordLadderController {
             if (endOfLadder && selectedBox.getText() != "") return;
 
             if (getBox(selected - 1).getStyleClass().contains("invalid")
-             || getBox(selected - 1).getStyleClass().contains("not-one-off")) return;
+             || getBox(selected - 1).getStyleClass().contains("not-one-off")) return; // previous word was invalid or wasn't off by one letter
 
             if (endOfWord) { // typed full word
                 Set<String> set = new HashSet<>(Arrays.asList(wordList));
@@ -186,7 +214,7 @@ public class WordLadderController {
                 fullWord += key.toLowerCase();
 
                 if (set.contains(fullWord)) {
-                    Set<String> pairSet = new HashSet<>(Arrays.asList(WordLadder.getPairs(DIFFICULTY, true)));
+                    Set<String> pairSet = new HashSet<>(Arrays.asList(WordLadder.getPairs(DIFFICULTY)));
                     String prevWord = "";
                     String nextWord = "";
 
@@ -195,21 +223,21 @@ public class WordLadderController {
                         nextWord += getBox(selected + i).getText().toLowerCase();
                     }
                     
-                    if (fullWord.equals(prevWord) || fullWord.equals(nextWord))
-                        for (int i = selected; i > selected - 3; i--)
+                    if (Arrays.asList(getFullLadder()).contains(fullWord))
+                        for (int i = selected; i > selected - columnCount; i--)
                             getBox(i).getStyleClass().add("invalid");
                     else if (!pairSet.contains(prevWord + ":" + fullWord) || (!nextWord.equals("") && !pairSet.contains(fullWord + ":" + nextWord)))
-                        for (int i = selected; i > selected - 3; i--)
+                        for (int i = selected; i > selected - columnCount; i--)
                             getBox(i).getStyleClass().add("not-one-off");
                 } else
-                    for (int i = selected; i > selected - 3; i--)
+                    for (int i = selected; i > selected - columnCount; i--)
                         getBox(i).getStyleClass().add("invalid");
             }
 
             if (endOfLadder) {
                 selectedBox.setText(key);
 
-                Set<String> pairSet = new HashSet<>(Arrays.asList(WordLadder.getPairs(DIFFICULTY, true)));
+                Set<String> pairSet = new HashSet<>(Arrays.asList(WordLadder.getPairs(DIFFICULTY)));
                 String[] ladder = getFullLadder();
 
                 for (int i = 0; i < ladder.length - 1; i++)
@@ -217,8 +245,21 @@ public class WordLadderController {
 
                 won = true;
 
-                for (Node box : wordGrid.getChildren())
+                for (Node box : currentGrid.getChildren())
                     box.getStyleClass().add("correct");
+
+                if (rotationAnimation != null)
+                    rotationAnimation.stop();
+
+                rotationAnimation = new Timeline(
+                    new KeyFrame(
+                        Duration.millis(150),
+                        new KeyValue(rotateX.angleProperty(), 0, Interpolator.EASE_BOTH),
+                        new KeyValue(rotateY.angleProperty(), 0, Interpolator.EASE_BOTH)
+                    )
+                );
+
+                rotationAnimation.play();
 
                 scheduler.schedule(() -> winDialog.setVisible(true), 2, TimeUnit.SECONDS);
 

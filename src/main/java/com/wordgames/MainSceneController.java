@@ -8,22 +8,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.Node;
+import javafx.scene.PerspectiveCamera;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 
 public class MainSceneController {
     public int DIFFICULTY;
 
     @FXML
-    private Button continueButton, playButton, playWordLadder, playJumble, titleScreenButton;
+    private Button continueButton, playButton, playWordLadder, playJumble, titleScreenButton, difficultyButton;
 
     @FXML
-    private BorderPane difficultyMenu, titleScreen, wordLadderPane;
-
-    @FXML
-    private HBox gameSelectMenu;
+    private BorderPane difficultyMenu, titleScreen, wordLadderPane, gameSelectMenu;
 
     @FXML
     private RadioButton easyButton, mediumButton, hardButton;
@@ -36,10 +33,10 @@ public class MainSceneController {
 
     @FXML
     void openGameSelect(ActionEvent event) {
+        DIFFICULTY = easyButton.isSelected() ? 0 : (mediumButton.isSelected() ? 1 : 2);
+
         difficultyMenu.setVisible(false);
         gameSelectMenu.setVisible(true);
-        continueButton.setText("Please select difficulty");
-        continueButton.setDisable(true);
     }
 
     @FXML
@@ -49,17 +46,14 @@ public class MainSceneController {
     }
 
     @FXML
+    void openDifficultySelect(ActionEvent event) {
+        gameSelectMenu.setVisible(false);
+        difficultyMenu.setVisible(true);
+    }
+
+    @FXML
     void setDifficulty(ActionEvent event) {
-        if (easyButton.isSelected()) {
-            continueButton.setText("Continue on Easy");
-            DIFFICULTY = 0;
-        } else if (mediumButton.isSelected()) {
-            continueButton.setText("Continue on Medium");
-            DIFFICULTY = 1;
-        } else if (hardButton.isSelected()) {
-            continueButton.setText("Continue on Hard");
-            DIFFICULTY = 2;
-        }
+        continueButton.setText("Continue on " + (easyButton.isSelected() ? "Easy" : (mediumButton.isSelected() ? "Medium" : "Hard")));
     }
 
     @FXML
@@ -68,6 +62,11 @@ public class MainSceneController {
         double x = ((Node)event.getSource()).getScene().getWidth(), y = ((Node)event.getSource()).getScene().getHeight();
         
         Scene scene = new Scene(wordLadderUI.load(), x, y);
+
+        PerspectiveCamera camera = new PerspectiveCamera();
+        camera.setFieldOfView(45);
+
+        scene.setCamera(camera);
 
         WordLadderController ladderController = wordLadderUI.getController();
         ladderController.initialize();
