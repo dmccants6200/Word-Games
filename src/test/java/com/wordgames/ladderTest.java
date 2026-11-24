@@ -14,7 +14,7 @@ public class LadderTest {
         }
         
     }
-
+    
     @Test
     void findPairs() {
         for (int i = 0; i < 3; i++) {

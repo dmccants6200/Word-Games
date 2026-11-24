@@ -1,8 +1,11 @@
 package com.wordgames;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
+//import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -10,35 +13,13 @@ import java.util.List;
 import java.util.Random;
 
 public class Jumble {
-    public static String[] getWordList(int difficulty) {
-        String filePath = "src\\main\\java\\com\\wordgames\\WordBanks\\" + (difficulty == 0 ? "easy" : (difficulty == 1 ? "medium" : "hard")) + ".txt"; // path to text file
-
-        List<String> lines = new ArrayList<>();
-
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            List<String> allLines = br.readAllLines();
-
-            for (String line : allLines) {
-                if (line == null) continue;
-                if (line.length() > difficulty + 3 || line.matches(".*[^a-zA-Z].*")) continue;
-
-                lines.add(line.toLowerCase());
-            }
-
-            br.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return lines.toArray(new String[0]);
-    }
-
     public static String[] generateJumble(int difficulty) {
-        String filePath = "src\\main\\java\\com\\wordgames\\JumbleClues\\" + (difficulty == 0 ? "easy" : (difficulty == 1 ? "medium" : "hard")) + ".txt"; // path to text file
-    
+        //String filePath = "src\\main\\java\\com\\wordgames\\JumbleClues\\" + (difficulty == 0 ? "easy" : (difficulty == 1 ? "medium" : "hard")) + ".txt"; // path to text file
+        Path filePath = Paths.get(System.getProperty("user.dir"), "JumbleClues\\" + (difficulty == 0 ? "easy" : (difficulty == 1 ? "medium" : "hard")) + ".txt");
+
         List<String> lines = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+        try (BufferedReader br = Files.newBufferedReader(filePath)) {
             List<String> allLines = br.readAllLines();
 
             for (String line : allLines) {
@@ -48,7 +29,7 @@ public class Jumble {
                 if (parts.length != 2) continue;
                 
                 String answer = parts[1];
-                if (answer.length() > difficulty + 3 || answer.matches(".*[^a-zA-Z].*")) continue;
+                if (answer.length() != difficulty + 3 || answer.matches(".*[^a-zA-Z].*")) continue;
 
                 lines.add(parts[0] + ":" + answer.toLowerCase());
             }
@@ -62,10 +43,9 @@ public class Jumble {
     }
 
     public static String randomWord(int difficulty) {
-        String[] wordList = getWordList(difficulty);
+        String[] wordList = WordLadder.getWordList(difficulty);
 
-        Random rand = new Random();
-        return wordList[rand.nextInt(wordList.length)];
+        return wordList[new Random().nextInt(wordList.length)];
     }
 
     public static String scramble(String word) {
@@ -87,8 +67,7 @@ public class Jumble {
         if (str1.length() != str2.length()) return false;
 
         // Convert to char arrays and sort
-        char[] arr1 = str1.toCharArray();
-        char[] arr2 = str2.toCharArray();
+        char[] arr1 = str1.toCharArray(), arr2 = str2.toCharArray();
         Arrays.sort(arr1);
         Arrays.sort(arr2);
 

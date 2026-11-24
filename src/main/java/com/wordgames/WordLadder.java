@@ -1,8 +1,11 @@
 package com.wordgames;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
+//import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,11 +17,12 @@ import java.util.Set;
 
 public class WordLadder {
     public static String[] getWordList(int difficulty) {
-        String filePath = "src\\main\\java\\com\\wordgames\\WordBanks\\" + (difficulty == 0 ? "easy" : (difficulty == 1 ? "medium" : "hard")) + ".txt"; // path to text file
-
+        //String filePath = "src\\main\\java\\com\\wordgames\\WordBanks\\" + (difficulty == 0 ? "easy" : (difficulty == 1 ? "medium" : "hard")) + ".txt"; // path to text file
+        Path filePath = Paths.get(System.getProperty("user.dir"), "WordBanks\\" + (difficulty == 0 ? "easy" : (difficulty == 1 ? "medium" : "hard")) + ".txt");
+        
         List<String> lines = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+        try (BufferedReader br = Files.newBufferedReader(filePath)) {
             List<String> allLines = br.readAllLines();
 
             for (String line : allLines) {
@@ -36,18 +40,16 @@ public class WordLadder {
         return lines.toArray(new String[0]);
     }
 
-    static int equals(String word1, String word2, int mistakesAllowed) {
-        int index = 10;
-            
-        for(int i = 0; i < word1.length(); i++) // go from first to last character index the words
-            if(word1.charAt(i) != word2.charAt(i)) { // if this character from word 1 does not equal the character from word 2
-                index = i;
-                mistakesAllowed--; // reduce one mistake allowed
-                if(mistakesAllowed < 0)// and if you have more mistakes than allowed
-                    return 10; // return false
+    private static boolean oneLetterOff(String s1, String s2) {
+        boolean oneOff = false;
+        for (int i = 0; i < s1.length(); i++)
+            if (s1.charAt(i) != s2.charAt(i)) {
+                if (oneOff) return false; // More than one difference
+                
+                oneOff = true;
             }
-
-        return index;
+        
+        return oneOff; // Must be exactly one difference
     }
 
     public static String[] getPairs(int difficulty) {
@@ -57,8 +59,7 @@ public class WordLadder {
         for (String word1 : words) 
             for (String word2 : words) {
                 if (word1.equals(word2)) continue;
-                int index = equals(word1, word2, 1);
-                if (index == 10) continue;
+                if (!oneLetterOff(word1, word2)) continue;
 
                 pairs.add(word1 + ":" + word2);
             }

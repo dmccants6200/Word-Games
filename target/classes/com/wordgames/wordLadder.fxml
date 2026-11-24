@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ButtonType?>
 <?import javafx.scene.control.DialogPane?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -18,18 +19,8 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.wordgames.WordLadderController">
    <children>
       <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <top>
-            <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="200.0" spacing="5.0" BorderPane.alignment="CENTER">
-               <children>
-                <Button fx:id="menuButton" focusTraversable="false" mnemonicParsing="false" onAction="#exitToMenu" stylesheets="@stylesheet.css" text="Exit to Menu" />
-               </children>
-               <padding>
-                  <Insets bottom="5.0" left="5.0" top="5.0" />
-               </padding>
-            </HBox>
-         </top>
          <center>
-            <StackPane pickOnBounds="false" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <StackPane fx:id="gamePane" pickOnBounds="false" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
                   <GridPane fx:id="easyGrid" alignment="CENTER" pickOnBounds="false">
                     <columnConstraints>
@@ -144,17 +135,48 @@
                         <Label layoutX="143.0" layoutY="15.0" styleClass="ladderInput" stylesheets="@stylesheet.css" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
                      </children>
                   </GridPane>
+                  <ScrollPane fx:id="help" fitToWidth="true" hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="250.0" stylesheets="@stylesheet.css" visible="false" StackPane.alignment="TOP_RIGHT">
+                     <content>
+                        <Label alignment="TOP_LEFT" styleClass="help-text" text="Use your keyboard to enter letters. Press backspace to remove a letter. When a row is filled, the text color will turn red if the word is not in the word list or yellow if it is not one letter away from an adjacent word." wrapText="true" />
+                     </content>
+                     <StackPane.margin>
+                        <Insets right="5.0" />
+                     </StackPane.margin>
+                  </ScrollPane>
                </children>
             </StackPane>
          </center>
+         <top>
+            <StackPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="53.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox alignment="CENTER_LEFT" pickOnBounds="false" prefHeight="35.0" prefWidth="200.0" spacing="5.0">
+                     <children>
+                      <Button fx:id="menuButton" focusTraversable="false" mnemonicParsing="false" onAction="#exitToMenu" stylesheets="@stylesheet.css" text="Exit to Menu" />
+                        <Button fx:id="viewResults" focusTraversable="false" layoutX="15.0" layoutY="15.0" mnemonicParsing="false" onAction="#showResults" stylesheets="@stylesheet.css" text="View Results" visible="false" />
+                     </children>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" top="5.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" pickOnBounds="false" prefHeight="35.0" prefWidth="200.0" spacing="5.0">
+                     <children>
+                        <Button fx:id="helpButton" focusTraversable="false" mnemonicParsing="false" onAction="#openHelp" stylesheets="@stylesheet.css" text="Help" />
+                     </children>
+                     <padding>
+                        <Insets bottom="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </HBox>
+               </children>
+            </StackPane>
+         </top>
       </BorderPane>
       <BorderPane pickOnBounds="false" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
-            <DialogPane fx:id="winDialog" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="190.0" prefWidth="300.0" stylesheets="@stylesheet.css" visible="false" BorderPane.alignment="CENTER">
+            <DialogPane fx:id="winDialog" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="190.0" prefWidth="320.0" stylesheets="@stylesheet.css" visible="false" BorderPane.alignment="CENTER">
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <Label alignment="CENTER" styleClass="dialog-header" stylesheets="@stylesheet.css" text="Press &quot;Next&quot; to start another round." textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <Label alignment="CENTER" styleClass="dialog-header" stylesheets="@stylesheet.css" text="Press &quot;Next Round&quot; to start another round." textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <font>
                               <Font name="Arial Black" size="20.0" />
                            </font>
@@ -169,6 +191,7 @@
                </header>
                <buttonTypes>
                   <ButtonType fx:constant="NEXT" />
+                  <ButtonType fx:constant="CLOSE" />
                </buttonTypes>
             </DialogPane>
          </center>

@@ -1,6 +1,6 @@
 @font-face {
     font-family: "Grime Slime";
-    src: url("../wordgames/GrimeSlime-Regular.ttf");
+    src: url("../wordgames/fonts/GrimeSlime-Regular.ttf");
 }
 
 .dialog-header {
@@ -67,7 +67,7 @@
     -fx-background-insets: 2 0 0 0,2 0 3 0, 2 0 4 0, 2 0 5 0;
 }
 
-.button .text, .ladderInput .text, .jumble-input .text, .jumble-label .text, .clue-label .text {
+.button .text, .ladderInput .text, .jumble-input .text, .jumble-label .text, .clue-label .text, .help-text .text {
     -fx-fill: white;
     -fx-effect: dropshadow(gaussian, #a30000, 0,0,0,2 );
 }
@@ -209,6 +209,76 @@
     -fx-background-position: center center;
 }
 
+.dialog-pane {
+    -fx-background-color: 
+        linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),
+        #9d4024,
+        #d8703b,
+        radial-gradient(center 50% 50%, radius 100%, #d86e3a, #c54e2c);
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-border-color: #9d4024;
+    -fx-border-width: 2px;
+    -fx-max-height: 190;
+    -fx-pref-height: 190;
+    -fx-min-height: 190;
+    -fx-max-width: 320;
+    -fx-pref-width: 320;
+    -fx-min-width: 320;
+}
+
+.dialog-pane .button-bar .container {
+    -fx-padding: 10 10 10 0;
+    -fx-spacing: 0;
+}
+
+.scroll-pane {
+    -fx-background-color: 
+        radial-gradient(center 50% 50%, radius 100%, #d86e3a, #c54e2c);
+    -fx-border-color: #9d4024;
+    -fx-border-width: 2px;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+.scroll-bar:vertical .track {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0em;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #9d4024;
+    -fx-background-radius: 0.5em;
+}
+
+.scroll-bar:vertical .increment-button,
+.scroll-bar:vertical .decrement-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 0 10 0 0;
+}
+
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
+    -fx-shape: "";
+    -fx-padding: 0;
+}
+
+.help-text {
+    -fx-font-size: 18px;
+    -fx-font-family: "Tahoma";
+    -fx-padding: 5;
+    -fx-text-alignment: center;
+}
+
 .selected {
     -fx-border-color: rgb(0, 68, 255)
 }
@@ -231,22 +301,4 @@
 
 .correct {
     -fx-border-color: green
-}
-
-.dialog-pane {
-    -fx-background-color: 
-        linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),
-        #9d4024,
-        #d8703b,
-        radial-gradient(center 50% 50%, radius 100%, #d86e3a, #c54e2c);
-    -fx-background-radius: 5px;
-    -fx-border-radius: 5px;
-    -fx-border-color: #9d4024;
-    -fx-border-width: 2px;
-    -fx-max-height: 190;
-    -fx-pref-height: 190;
-    -fx-min-height: 190;
-    -fx-max-width: 300;
-    -fx-pref-width: 300;
-    -fx-min-width: 300;
 }

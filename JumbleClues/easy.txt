@@ -64,7 +64,7 @@ He wore a baseball ___ to protect his face from the sun.:cap
 My uncle washed his ___ before the road trip.:car
 The fluffy ___ curled up beside the fireplace.:cat
 A crow let out a loud ___ from the rooftop.:caw
-The farmer planted corn in the rich ___.:cob
+I love to eat corn on the ___.:cob
 We ordered fresh ___ for dinner at the seaside restaurant.:cod
 The mechanic replaced the damaged ___ inside the machine.:cog
 He tried to ___ his way into getting a free ticket.:con
@@ -142,7 +142,7 @@ The mechanic filled the tank with enough ___ for the journey.:gas
 The ___ couple celebrated their wedding with a colorful party.:gay
 The ___ made his hair stand up.:gel
 The princess wore a sparkling ___ on her necklace.:gem
-The kid yelled "___ outta my way!".:get
+The kid yelled "___ outta my way!":get
 The band played a sold-out ___ at the local theater.:gig
 Many programmers use ___ to keep their projects in sync.:git
 It takes forever to eat an entire ___stopper.:gob

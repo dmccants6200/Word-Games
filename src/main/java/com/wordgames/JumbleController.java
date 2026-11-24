@@ -10,7 +10,12 @@ import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import javafx.util.Duration;
 
+import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,11 +24,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.shape.Circle;
+import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 public class JumbleController {
@@ -42,7 +52,16 @@ public class JumbleController {
     private DialogPane winDialog;
 
     @FXML
-    private Button menuButton;
+    private ScrollPane help;
+
+    @FXML
+    private StackPane gamePane;
+
+    @FXML
+    private BorderPane cluePane;
+
+    @FXML
+    private Button helpButton, viewResults;
 
     @FXML
     void exitToMenu(ActionEvent event) throws IOException {
@@ -61,14 +80,32 @@ public class JumbleController {
         stage.show();
     }
 
+    @FXML
+    void openHelp(ActionEvent event) {
+        help.setVisible(!help.isVisible());
+    }
+
+    GaussianBlur blur = new GaussianBlur(10);
+    
+    @FXML
+    void showResults(ActionEvent event) {
+        viewResults.setVisible(false);
+        winDialog.setVisible(true);
+        gamePane.setEffect(blur);
+        cluePane.setEffect(blur);
+    }
+
     private Boolean initializing = false, won = false;
-    private int selected = 0, DIFFICULTY, WORD_LENGTH;
+    private int selected, DIFFICULTY, WORD_LENGTH, columnCount, rowCount;
     String[] wordList = null;
     String correctAnswer;
 
-    VBox currentJumble;
     GridPane currentClue;
+    VBox currentJumble;
+    Rotate rotateX, rotateY;
 
+    private Timeline rotationAnimation;
+    
     public void setDifficulty(int difficulty) {
         DIFFICULTY = difficulty;
         WORD_LENGTH = difficulty + 3;
@@ -82,17 +119,75 @@ public class JumbleController {
 
         currentJumble = difficulty == 0 ? easyJumble : (difficulty == 1 ? mediumJumble : hardJumble);
         currentClue = difficulty == 0 ? easyClue : (difficulty == 1 ? mediumClue : hardClue);
-    }
 
-    public int getDifficulty() {
-        return DIFFICULTY;
+        rotateX = new Rotate(0, currentJumble.getWidth() / 2, currentJumble.getHeight() / 2, 0, Rotate.Y_AXIS);
+        rotateY = new Rotate(0, currentJumble.getWidth() / 2, currentJumble.getHeight() / 2, 0, Rotate.X_AXIS);
+
+        currentJumble.layoutBoundsProperty().addListener((obs, oldBounds, bounds) -> {
+            double centerX = bounds.getMinX() + bounds.getWidth() / 2;
+            double centerY = bounds.getMinY() + bounds.getHeight() / 2;
+
+            rotateX.setPivotX(centerX);
+            rotateX.setPivotY(centerY);
+
+            rotateY.setPivotX(centerX);
+            rotateY.setPivotY(centerY);
+        });
+
+        currentJumble.getTransforms().addAll(rotateX, rotateY);
+    }
+    
+    public void setSelected(int index) {
+        selected = index;
+
+        if (rotationAnimation != null)
+            rotationAnimation.stop();
+
+        if (index / WORD_LENGTH <= WORD_LENGTH - 1) {
+            double maxTilt = 5;
+
+            double columnPercent = (columnCount - 2.0 * (selected % columnCount + 1)) / (columnCount - 1);
+            double rowPercent = (2.0 * (selected / columnCount + 1) - rowCount - 1) / (rowCount - 1);
+
+            double targetX = maxTilt * columnPercent;
+            double targetY = maxTilt * rowPercent;
+
+            // Stop any previous animation
+
+            rotationAnimation = new Timeline(
+                new KeyFrame(
+                    Duration.millis(150),
+                    new KeyValue(rotateX.angleProperty(), targetX, Interpolator.EASE_BOTH),
+                    new KeyValue(rotateY.angleProperty(), targetY, Interpolator.EASE_BOTH)
+                )
+            );
+        } else {
+            rotationAnimation = new Timeline(
+                new KeyFrame(
+                    Duration.millis(150),
+                    new KeyValue(rotateX.angleProperty(), 0, Interpolator.EASE_BOTH),
+                    new KeyValue(rotateY.angleProperty(), 0, Interpolator.EASE_BOTH)
+                )
+            );
+        }
+
+        rotationAnimation.play();
     }
 
     @FXML
     public void initialize() {
-        Button nextButton = (Button) winDialog.lookupButton(ButtonType.NEXT);
+        Button nextButton = (Button) winDialog.lookupButton(ButtonType.NEXT),
+        cancelButton = (Button)winDialog.lookupButton(ButtonType.CLOSE);
         
+        nextButton.setText("Next Round");
         nextButton.setOnAction(event -> initializeJumble());
+        cancelButton.setText("View Game");
+        cancelButton.setOnAction(event -> {
+            winDialog.setVisible(false);
+            viewResults.setVisible(true);
+            gamePane.setEffect(null);
+            cluePane.setEffect(null);
+        });
     }
 
     private Label getBox(int index) {
@@ -183,15 +278,40 @@ public class JumbleController {
             box.getStyleClass().add("correct");
         }
         
-        scheduler.schedule(() -> winDialog.setVisible(true), 2, TimeUnit.SECONDS);
+        if (rotationAnimation != null)
+            rotationAnimation.stop();
+
+        rotationAnimation = new Timeline(
+            new KeyFrame(
+                Duration.millis(150),
+                new KeyValue(rotateX.angleProperty(), 0, Interpolator.EASE_BOTH),
+                new KeyValue(rotateY.angleProperty(), 0, Interpolator.EASE_BOTH)
+            )
+        );
+
+        rotationAnimation.play();
+
+        scheduler.schedule(() -> {
+            winDialog.setVisible(true);
+            gamePane.setEffect(blur);
+            cluePane.setEffect(blur);
+            helpButton.setVisible(false);
+            help.setVisible(false);
+        }, 2, TimeUnit.SECONDS);
     }
 
     public void initializeJumble() {
         initializing = true;
         winDialog.setVisible(false);
+        helpButton.setVisible(true);
+        gamePane.setEffect(null);
+        cluePane.setEffect(null);
 
-        selected = 0;
-        wordList = Jumble.getWordList(DIFFICULTY);
+        columnCount = WORD_LENGTH;
+        rowCount = WORD_LENGTH;
+
+        setSelected(0);
+        wordList = WordLadder.getWordList(DIFFICULTY);
 
         for (int i = 0; i < WORD_LENGTH * (WORD_LENGTH + 1); i++) {
             getBox(i).getStyleClass().remove("selected");
@@ -258,7 +378,7 @@ public class JumbleController {
     }
 
     public void insertLetter(String key) {
-        if (initializing || won) return;
+        if (initializing || won || help.isVisible()) return;
 
         if (key.equals("BACK_SPACE")) { // backspace pressed
             GridPane grid = (GridPane)(Parent)getBox(selected).getParent();
@@ -271,7 +391,7 @@ public class JumbleController {
             if (getBox(selected).getText().equals("") && selected != 0) {
                 getBox(selected).getStyleClass().remove("selected");
                     
-                selected -= 1;
+                setSelected(selected - 1);
                 getBox(selected).getStyleClass().add("selected");
                 getBox(selected).setText("");
 
@@ -326,7 +446,7 @@ public class JumbleController {
 
             getBox(selected).getStyleClass().remove("selected");
                     
-            selected += 1;
+            setSelected(selected + 1);
             getBox(selected).getStyleClass().add("selected");
         } else { // arrow key pressed
             switch (key) {
@@ -334,7 +454,7 @@ public class JumbleController {
                     if (selected / WORD_LENGTH == 0) return;
                     getBox(selected).getStyleClass().remove("selected");
 
-                    selected -= WORD_LENGTH;
+                    setSelected(selected - WORD_LENGTH);
                     getBox(selected).getStyleClass().add("selected");
 
                     break;
@@ -342,7 +462,7 @@ public class JumbleController {
                     if (selected / WORD_LENGTH == WORD_LENGTH) return;
                     getBox(selected).getStyleClass().remove("selected");
 
-                    selected += WORD_LENGTH;
+                    setSelected(selected + WORD_LENGTH);
                     getBox(selected).getStyleClass().add("selected");
 
                     break;
@@ -350,7 +470,7 @@ public class JumbleController {
                     if (selected == 0) return;
                     getBox(selected).getStyleClass().remove("selected");
                     
-                    selected -= 1;
+                    setSelected(selected - 1);
                     getBox(selected).getStyleClass().add("selected");
 
                     break;
@@ -358,7 +478,7 @@ public class JumbleController {
                     if (selected == WORD_LENGTH * (WORD_LENGTH + 1) - 1) return;
                     getBox(selected).getStyleClass().remove("selected");
                     
-                    selected += 1;
+                    setSelected(selected + 1);
                     getBox(selected).getStyleClass().add("selected");
 
                     break;

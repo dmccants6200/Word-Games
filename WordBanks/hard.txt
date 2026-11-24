@@ -182,7 +182,6 @@ bogus
 boing
 boned
 bongo
-bonny
 bonus
 boost
 booth
@@ -1797,7 +1796,6 @@ sweet
 swell
 swept
 swift
-swill
 swing
 swipe
 swirl

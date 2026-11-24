@@ -25,7 +25,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 
@@ -39,7 +42,13 @@ public class WordLadderController {
     private DialogPane winDialog;
 
     @FXML
-    private Button menuButton;
+    private Button helpButton, viewResults;
+
+    @FXML
+    private ScrollPane help;
+
+    @FXML
+    private StackPane gamePane;
 
     @FXML
     void exitToMenu(ActionEvent event) throws IOException {
@@ -59,24 +68,42 @@ public class WordLadderController {
     }
 
     @FXML
+    void openHelp(ActionEvent event) {
+        help.setVisible(!help.isVisible());
+    }
+
+    GaussianBlur blur = new GaussianBlur(10);
+    
+    @FXML
+    void showResults(ActionEvent event) {
+        viewResults.setVisible(false);
+        winDialog.setVisible(true);
+        gamePane.setEffect(blur);
+    }
+
+    @FXML
     public void initialize() {
-        Button nextButton = (Button) winDialog.lookupButton(ButtonType.NEXT);
+        Button nextButton = (Button)winDialog.lookupButton(ButtonType.NEXT),
+        cancelButton = (Button)winDialog.lookupButton(ButtonType.CLOSE);
         
+        nextButton.setText("Next Round");
         nextButton.setOnAction(event -> initializeWordLadder());
+        cancelButton.setText("View Game");
+        cancelButton.setOnAction(event -> {
+            winDialog.setVisible(false);
+            viewResults.setVisible(true);
+            gamePane.setEffect(null);
+        });
     }
 
     String[] wordList = null;
 
-    int columnCount;
-    int rowCount;
-    int selected;
-    Boolean initializing = false;
-    Boolean won = false;
+    int selected, columnCount, rowCount;
+    Boolean won = false, initializing = false;
     private int DIFFICULTY;
 
     GridPane currentGrid;
-    Rotate rotateX;
-    Rotate rotateY;
+    Rotate rotateX, rotateY;
 
     private Timeline rotationAnimation;
 
@@ -103,10 +130,6 @@ public class WordLadderController {
         });
 
         currentGrid.getTransforms().addAll(rotateX, rotateY);
-    }
-
-    public int getDifficulty() {
-        return DIFFICULTY;
     }
 
     private void setSelected(int index) {
@@ -157,6 +180,8 @@ public class WordLadderController {
     public void initializeWordLadder() {
         initializing = true;
         winDialog.setVisible(false);
+        helpButton.setVisible(true);
+        gamePane.setEffect(null);
         String[] ladders = WordLadder.generateLadder(DIFFICULTY);
         wordList = WordLadder.getWordList(DIFFICULTY);
         Random rand = new Random();
@@ -191,7 +216,7 @@ public class WordLadderController {
     }
     
     public void insertLetter(String key) {
-        if (initializing || won) return;
+        if (initializing || won || help.isVisible()) return;
 
         Boolean endOfWord = (selected + 1) % columnCount == 0;
         Boolean endOfLadder = endOfWord && selected == (columnCount * rowCount - columnCount - 1);
@@ -261,7 +286,12 @@ public class WordLadderController {
 
                 rotationAnimation.play();
 
-                scheduler.schedule(() -> winDialog.setVisible(true), 2, TimeUnit.SECONDS);
+                scheduler.schedule(() -> {
+                    winDialog.setVisible(true);
+                    gamePane.setEffect(blur);
+                    helpButton.setVisible(false);
+                    help.setVisible(false);
+                }, 2, TimeUnit.SECONDS);
 
                 return;
             }

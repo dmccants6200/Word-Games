@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ButtonType?>
 <?import javafx.scene.control.DialogPane?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -21,7 +22,7 @@
    <children>
       <BorderPane stylesheets="@stylesheet.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <bottom>
-            <BorderPane prefHeight="58.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <BorderPane fx:id="cluePane" prefHeight="58.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <top>
                   <Label fx:id="clueLabel" alignment="BOTTOM_CENTER" styleClass="clue-label" stylesheets="@stylesheet.css" textAlignment="CENTER" wrapText="true" BorderPane.alignment="CENTER">
                      <font>
@@ -169,18 +170,8 @@
                </center>
             </BorderPane>
          </bottom>
-         <top>
-            <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="200.0" spacing="5.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Button fx:id="menuButton" focusTraversable="false" mnemonicParsing="false" onAction="#exitToMenu" stylesheets="@stylesheet.css" text="Exit to Menu" />
-               </children>
-               <padding>
-                  <Insets bottom="5.0" left="5.0" top="5.0" />
-               </padding>
-            </HBox>
-         </top>
          <center>
-            <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <StackPane fx:id="gamePane" pickOnBounds="false" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
                   <VBox fx:id="easyJumble" alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="156.0" spacing="3.0">
                      <children>
@@ -760,9 +751,40 @@
                         </GridPane>
                      </children>
                   </VBox>
+                  <ScrollPane fx:id="help" fitToWidth="true" hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="250.0" stylesheets="@stylesheet.css" visible="false" StackPane.alignment="TOP_RIGHT">
+                     <content>
+                        <Label alignment="TOP_LEFT" styleClass="help-text" text="Use your keyboard to enter letters. Press backspace to remove a letter. When a row is filled, the text color will turn red if the word is not in the word list or yellow if it is not one letter away from an adjacent word." wrapText="true" />
+                     </content>
+                     <StackPane.margin>
+                        <Insets right="5.0" />
+                     </StackPane.margin>
+                  </ScrollPane>
                </children>
             </StackPane>
          </center>
+         <top>
+            <StackPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="53.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="200.0" spacing="5.0">
+                     <children>
+                        <Button fx:id="menuButton" focusTraversable="false" mnemonicParsing="false" onAction="#exitToMenu" stylesheets="@stylesheet.css" text="Exit to Menu" />
+                        <Button fx:id="viewResults" focusTraversable="false" mnemonicParsing="false" onAction="#showResults" stylesheets="@stylesheet.css" text="View Results" visible="false" />
+                     </children>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" top="5.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" pickOnBounds="false" prefHeight="35.0" prefWidth="200.0" spacing="5.0">
+                     <children>
+                        <Button fx:id="helpButton" focusTraversable="false" mnemonicParsing="false" onAction="#openHelp" stylesheets="@stylesheet.css" text="Help" />
+                     </children>
+                     <padding>
+                        <Insets bottom="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </HBox>
+               </children>
+            </StackPane>
+         </top>
       </BorderPane>
       <BorderPane layoutX="10.0" layoutY="10.0" pickOnBounds="false" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
@@ -785,6 +807,7 @@
                </header>
                <buttonTypes>
                   <ButtonType fx:constant="NEXT" />
+                  <ButtonType fx:constant="CLOSE" />
                </buttonTypes>
             </DialogPane>
          </center>

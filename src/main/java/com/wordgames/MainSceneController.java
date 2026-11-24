@@ -95,6 +95,11 @@ public class MainSceneController {
 
         Scene scene = new Scene(jumbleUI.load(), x, y);
 
+        PerspectiveCamera camera = new PerspectiveCamera();
+        camera.setFieldOfView(45);
+
+        scene.setCamera(camera);
+
         JumbleController jumbleController = jumbleUI.getController();
         jumbleController.initialize();
         jumbleController.setDifficulty(DIFFICULTY);
